@@ -177,13 +177,135 @@ Direct Preference Optimization (DPO) has emerged as a stable, scalable, and effi
 LLM中的噪声：
 * 逐点噪声(pointwise noise)：包括低质量数据点
 * 成对噪声(pairwise noise)：影响偏好排名的错误数据对关联
-#### 
+#### 使用DRO优化DPO: Dr. DPO
+* 利用分布稳健模型(Distributionally Robust Optimization)来增强DPO对上述噪声的弹性
+* 理论上说明DPO本身潜入了DRO原理，赋予了其对噪声的鲁棒性，正则化系数在其抗噪性$\beta$中起关键作用
+* 拓展引入Dr.DPO (distributionally robust DPO)，通过针对最坏情况的成对场景来集成成对稳健性
+
 ### 文章链接
 * <a href="./papers/10293_Towards_Robust_Alignment.pdf">查看PDF</a>
 * <a href="https://openreview.net/forum?id=CbfsKHiWEn">ICLR链接</a>
 ### 摘要
 This study addresses the challenge of noise in training datasets for Direct Preference Optimization (DPO), a method for aligning Large Language Models (LLMs) with human preferences. We categorize noise into pointwise noise, which includes low-quality data points, and pairwise noise, which encompasses erroneous data pair associations that affect preference rankings. Utilizing Distributionally Robust Optimization (DRO), we enhance DPO's resilience to these types of noise. Our theoretical insights reveal that DPO inherently embeds DRO principles, conferring robustness to pointwise noise, with the regularization coefficient playing a critical role in its noise resistance. Extending this framework, we introduce Distributionally Robustifying DPO (Dr. DPO), which integrates pairwise robustness by optimizing against worst-case pairwise scenarios. The novel hyperparameter in Dr. DPO allows for fine-tuned control over data pair reliability, providing a strategic balance between exploration and exploitation in noisy training environments. Empirical evaluations demonstrate that Dr. DPO substantially improves the quality of generated text and response accuracy in preference datasets, showcasing enhanced performance in both noisy and noise-free settings.
 本研究解决了直接偏好优化 （DPO） 训练数据集中的噪声挑战，DPO 是一种将大型语言模型 （LLMs。我们将噪声分为逐点噪声（包括低质量数据点）和成对噪声（包含影响偏好排名的错误数据对关联）。利用分布稳健优化 （DRO），我们增强了 DPO 对这些类型噪声的弹性。我们的理论见解表明，DPO 本身嵌入了 DRO 原理，赋予了逐点噪声的鲁棒性，正则化系数在其抗噪声性 中起着关键作用。扩展此框架，我们引入了分布稳健性 DPO （Dr. DPO），它通过针对最坏情况的成对情景进行优化来集成成对稳健性。Dr. DPO 中的新型超参数 允许对数据对可靠性进行微调控制，在嘈杂的训练环境中提供勘探和开发之间的战略平衡。实证评估表明，DPO 博士大大提高了偏好数据集中生成文本的质量和响应准确性，在有噪声和无噪声设置中都表现出增强的性能。
+
+
+## 8. Length Desensitization in Direct Preference Optimization
+DPO中的长度脱敏
+### 关键字
+* LLM
+* RLHF
+* PO(Preference Optimization)
+### 主要内容
+#### DPO对详细程度有化过度
+往往会针对详细程度过度优化，可能会对性能和用户体验产生不利影响
+#### 分析得“长度敏感性”
+通过对DPO的优化目标做理论分析，得到其隐含奖励与数据长度之间的强相关性，会误导优化方向，导致DPO的长度敏感并倾向于冗长
+#### LD(length desensitization)-DPO
+所提出的方法旨在通过将相对不重要的显式长度偏好与其他隐式偏好解耦，使 DPO 对数据长度脱敏，从而能够更有效地学习内在偏好。
+
+### 文章链接
+* <a href="./papers/6752_Length_Desensitization_in.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=CuwjD3cazX">ICLR链接</a>
+### 摘要
+Direct Preference Optimization (DPO) is widely utilized in the Reinforcement Learning from Human Feedback (RLHF) phase to align Large Language Models (LLMs) with human preferences, thereby enhancing both their harmlessness and efficacy. However, it has been observed that DPO tends to over-optimize for verbosity, which can detrimentally affect both performance and user experience. In this paper, we conduct an in-depth theoretical analysis of DPO's optimization objective and reveal a strong correlation between its implicit reward and data length. This correlation misguides the optimization direction, resulting in length sensitivity during the DPO training and leading to verbosity. To address this issue, we propose a length-desensitization improvement method for DPO, termed LD-DPO. The proposed method aims to desensitize DPO to data length by decoupling explicit length preference, which is relatively insignificant, from the other implicit preferences, thereby enabling more effective learning of the intrinsic preferences. We utilized two settings (Base and Instruct) of Llama2-13B, Llama3-8B, and Qwen2-7B for experimental validation on various benchmarks including MT-Bench and AlpacaEval 2. The experimental results indicate that LD-DPO consistently outperforms DPO and other baseline methods, achieving more concise responses with a 10-40% reduction in length compared to DPO. We conducted in-depth experimental analyses to demonstrate that LD-DPO can indeed achieve length desensitization and align the model more closely with human-like preferences. ”Brevity is the Soul of Wit.''—William Shakespeare
+直接偏好优化 （DPO） 广泛用于人类反馈强化学习 （RLHF） 阶段，以使大型语言模型 （LLMs人类偏好保持一致，从而提高它们的无害性和有效性。但是，据观察，DPO 往往会针对详细程度进行过度优化，这可能会对性能和用户体验产生不利影响。在本文中，我们对 DPO 的优化目标进行了深入的理论分析，并揭示了其隐含奖励与数据长度之间的强相关性。这种相关性误导了优化方向，导致 DPO 训练期间的长度敏感并导致冗长。为了解决这个问题，我们提出了一种 DPO 的长度脱敏改进方法，称为 LD-DPO。所提出的方法旨在通过将相对微不足道的显式长度偏好与其他隐式偏好解耦，使 DPO 对数据长度脱敏，从而能够更有效地学习内在偏好。我们使用了 Llama2-13B、Llama3-8B 和 Qwen2-7B 的两种设置 （Base 和 Instruct） 在各种基准（包括 MT-Bench 和 AlpacaEval 2）上进行实验验证。实验结果表明，LD-DPO 始终优于 DPO 和其他基线方法，与 DPO 相比，实现了更简洁的反应，长度减少了 10-40%。我们进行了深入的实验分析，以证明 LD-DPO 确实可以实现长度脱敏，并使模型更紧密地与类似人类的偏好保持一致。“简洁是机智的灵魂。”——威廉·莎士比亚
+
+## 9. Bootstrapping Language Models with DPO Implicit Rewards
+使用 DPO 隐式奖励引导语言模型
+### 关键字
+* Alignment
+* DPO
+* LLM
+
+### 主要内容
+#### 充分利用DPO训练后得到的隐式奖励模型
+即这种隐式奖励模型本身可以以引导方式使用，以进一步对齐 LLM
+#### 细节
+使用当前 LLM来构建偏好数据集，然后在后续的 DPO 轮次中使用。合并消除响应长度偏差并提高偏好数据集质量的改进，以进一步提高。
+#### DICE(Dpo ImpliCit rEwards) self-alignment
+### 文章链接
+* <a href="./papers/6460_Bootstrapping_Language_Mo.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=dliIIodM6b">ICLR连接</a>
+### 摘要
+Human alignment in large language models (LLMs) is an active area of research. A recent groundbreaking work, direct preference optimization (DPO), has greatly simplified the process from past work in reinforcement learning from human feedback (RLHF) by bypassing the reward learning stage in RLHF. DPO, after training, provides an implicit reward model. In this work, we make a novel observation that this implicit reward model can by itself be used in a bootstrapping fashion to further align the LLM. Our approach is to use the rewards from a current LLM model to construct a preference dataset, which is then used in subsequent DPO rounds. We incorporate refinements that debias the length of the responses and enhance the quality of the preference dataset to further improve our approach. Our approach, named self-alignment with DPO ImpliCit rEwards (DICE), shows great improvements in alignment. It achieves an increase of more than 8 in length-controlled win rate on AlpacaEval 2 for all the different base models that we tried, without relying on external feedback.
+大型语言模型中的人类对齐 （LLMs） 是一个活跃的研究领域。最近的一项开创性工作，直接偏好优化 （DPO），通过绕过 RLHF 中的奖励学习阶段，大大简化了过去从人类反馈强化学习 （RLHF） 的工作过程。DPO 在训练后提供了一个隐式奖励模型。在这项工作中，我们提出了一个新颖的观察，即这种隐式奖励模型本身可以以引导方式使用，以进一步对齐 LLM。我们的方法是使用当前 LLM来构建偏好数据集，然后在后续的 DPO 轮次中使用。我们合并了消除响应长度偏差并提高偏好数据集质量的改进，以进一步改进我们的方法。我们的方法被命名为 DPO ImpliCit rEwards （DICE） 的自对准，显示出对准的巨大改进。对于我们尝试过的所有不同基本模型，它在 AlpacaEval 2 上实现了超过 8 的长度控制胜率增加，而无需依赖外部反馈。
+
+## 10. Effective Text-to-Image Alignment with Quality Aware Pair Ranking
+有效的文生图在质量感知排名的对齐
+### 关键字
+* DPO
+* Diffusion
+### 主要内容
+#### Diffusion-DPO在T2I(Text to Image)领域有效
+#### 提出问题
+所有首选项对对齐微调的贡献是否相同？偏好有时可能是主观的，并且可能并不总是转化为有效地调整模型
+#### 工作重点——开发一个质量指标
+开发了一个质量指标来对图像偏好对进行排名，并实现有效的基于 Diffusion-DPO 的对齐微调。
+
+### 文章链接
+* <a href="./papers/8100_Effective_Text_to_Image_A.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=YeZNN6Iy6Q">ICLR链接</a>
+### 摘要
+Fine-tuning techniques such as Reinforcement Learning with Human Feedback (RLHF) and Direct Preference Optimization (DPO) allow us to steer Large Language Models (LLMs) to be align better with human preferences. Alignment is equally important in text-to-image generation. Recent adoption of DPO, specifically Diffusion-DPO, for Text-to-Image (T2I) diffusion models has proven to work effectively in improving visual appeal and prompt-image alignment. The mentioned works fine-tune on Pick-a-Pic dataset, consisting of approximately one million image preference pairs, collected via crowdsourcing at scale. However, do all preference pairs contribute equally to alignment fine-tuning? Preferences can be subjective at times and may not always translate into effectively aligning the model. In this work, we investigate the above-mentioned question. We develop a quality metric to rank image preference pairs and achieve effective Diffusion-DPO-based alignment fine-tuning.We show that the SD-1.5 and SDXL models fine-tuned using the top 5.33% of the data perform better both quantitatively and qualitatively than the models fine-tuned on the full dataset.
+基于人工反馈的强化学习 （RLHF） 和直接偏好优化 （DPO） 等微调技术使我们能够引导大型语言模型 （LLMs） 更好地与人类偏好保持一致。对齐方式在文本到图像的生成中同样重要。最近将 DPO，特别是 Diffusion-DPO 用于文本到图像 （T2I） 扩散模型已被证明可以有效地提高视觉吸引力和提示图像对齐。上述工作在 Pick-a-Pic 数据集上进行微调，该数据集由大约 100 万个图像偏好对组成，通过大规模众包收集。但是，所有首选项对对齐微调的贡献是否相同？偏好有时可能是主观的，并且可能并不总是转化为有效地调整模型。在这项工作中，我们研究了上述问题。我们开发了一个质量指标来对图像偏好对进行排名，并实现有效的基于 Diffusion-DPO 的对齐微调。我们表明，使用前 5.33% 的数据进行微调的 SD-1.5 和 SDXL 模型在定量和定性方面都比在整个数据集上微调的模型表现更好。
+
+
+## 11. alpha-DPO: Adaptive Reward Margin is What Direct Preference Optimization Needs
+DPO需要自适应奖励边际
+### 关键字
+* DPO
+* LLM'a Alignment
+### 主要内容
+#### 现有问题
+* RLHF的计算效率和训练稳定性不好
+* DPO和SimPO提供RLHF的离线替代方案，但是
+    * DPO依赖潜在的次优参考模型(potentially suboptimal reference model)
+    * SimPO对固定目标奖励边际的假设可能会导致在不同数据设置中做出次优决策
+#### 他们提出了alpha-DPO
+* 自适应偏好优化算法(adaptive preference optimization algorithm)，通过引入动态奖励边际来解决上述限制
+* 使用自适应偏好分配，平衡策略模型与参考模型，以实现个性化的奖励边际
+* 理论证明了它作为替代优化目标的有效性以及它通过 KL 发散控制平衡对齐和多样性的能力。
+### 文章链接
+* <a href="./papers/13547_alpha_DPO_Adaptive_Rewar.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=QqziJAdev9">ICLR链接</a>
+### 摘要
+Aligning large language models (LLMs) with human values and intentions is crucial for their utility, honesty, and safety. Reinforcement learning from human feedback (RLHF) is a popular approach to achieve this alignment, but it faces challenges in computational efficiency and training stability. Recent methods like Direct Preference Optimization (DPO) and Simple Preference Optimization (SimPO) have proposed offline alternatives to RLHF, simplifying the process by reparameterizing the reward function. However, DPO depends on a potentially suboptimal reference model, and SimPO's assumption of a fixed target reward margin may lead to suboptimal decisions in diverse data settings. In this work, we propose (\alpha)-DPO, an adaptive preference optimization algorithm designed to address these limitations by introducing a dynamic reward margin. Specifically, (\alpha)-DPO employs an adaptive preference distribution, balancing the policy model and the reference model to achieve personalized reward margins. We provide theoretical guarantees for (\alpha)-DPO, demonstrating its effectiveness as a surrogate optimization objective and its ability to balance alignment and diversity through KL divergence control. Empirical evaluations on AlpacaEval 2 and Arena-Hard show that (\alpha)-DPO consistently outperforms DPO and SimPO across various model settings, establishing it as a robust approach for fine-tuning LLMs. Our method achieves significant improvements in win rates, highlighting its potential as a powerful tool for LLM alignment.
+将大型语言模型 （LLMs人类价值观和意图保持一致，对于它们的实用性、诚实性和安全性至关重要。来自人类反馈的强化学习 （RLHF） 是实现这种对齐的常用方法，但它在计算效率和训练稳定性方面面临挑战。最近的方法，如直接偏好优化 （DPO） 和简单偏好优化 （SimPO） 提出了 RLHF 的离线替代方案，通过重新参数化奖励函数来简化流程。然而，DPO 依赖于潜在的次优参考模型，而 SimPO 对固定目标奖励边际的假设可能会导致在不同数据设置中做出次优决策。在这项工作中，我们提出了 （\alpha）-DPO，这是一种自适应偏好优化算法，旨在通过引入动态奖励边际来解决这些限制。具体来说， （\alpha）-DPO 采用自适应偏好分配，平衡策略模型和参考模型，以实现个性化的奖励边际。我们为 （\alpha）-DPO 提供了理论保证，证明了它作为替代优化目标的有效性以及它通过 KL 发散控制平衡对齐和多样性的能力。对 AlpacaEval 2 和 Arena-Hard 的实证评估表明，（\alpha）-DPO 在各种模型设置中始终优于 DPO 和 SimPO，使其成为微调 LLMs。我们的方法在胜率方面取得了显着的提高，凸显了它作为 LLM。
+
+## 12. Mask-DPO: Generalizable Fine-grained Factuality Alignment of LLMs
+
+### 关键字
+### 主要内容
+### 文章链接
+* <a href="./papers/4078_Mask_DPO_Generalizable_Fi.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=d2H1oTNITn">ICLR链接</a>
+### 摘要
+
+## 占位
+### 关键字
+### 主要内容
+### 文章链接
+### 摘要
+
+## 占位
+### 关键字
+### 主要内容
+### 文章链接
+### 摘要
+
+## 占位
+### 关键字
+### 主要内容
+### 文章链接
+### 摘要
+
+## 占位
+### 关键字
+### 主要内容
+### 文章链接
+### 摘要
+
 ## 占位
 ### 关键字
 ### 主要内容
