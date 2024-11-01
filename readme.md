@@ -270,68 +270,138 @@ DPO需要自适应奖励边际
 * <a href="./papers/13547_alpha_DPO_Adaptive_Rewar.pdf">查看PDF</a>
 * <a href="https://openreview.net/forum?id=QqziJAdev9">ICLR链接</a>
 ### 摘要
-Aligning large language models (LLMs) with human values and intentions is crucial for their utility, honesty, and safety. Reinforcement learning from human feedback (RLHF) is a popular approach to achieve this alignment, but it faces challenges in computational efficiency and training stability. Recent methods like Direct Preference Optimization (DPO) and Simple Preference Optimization (SimPO) have proposed offline alternatives to RLHF, simplifying the process by reparameterizing the reward function. However, DPO depends on a potentially suboptimal reference model, and SimPO's assumption of a fixed target reward margin may lead to suboptimal decisions in diverse data settings. In this work, we propose (\alpha)-DPO, an adaptive preference optimization algorithm designed to address these limitations by introducing a dynamic reward margin. Specifically, (\alpha)-DPO employs an adaptive preference distribution, balancing the policy model and the reference model to achieve personalized reward margins. We provide theoretical guarantees for (\alpha)-DPO, demonstrating its effectiveness as a surrogate optimization objective and its ability to balance alignment and diversity through KL divergence control. Empirical evaluations on AlpacaEval 2 and Arena-Hard show that (\alpha)-DPO consistently outperforms DPO and SimPO across various model settings, establishing it as a robust approach for fine-tuning LLMs. Our method achieves significant improvements in win rates, highlighting its potential as a powerful tool for LLM alignment.
-将大型语言模型 （LLMs人类价值观和意图保持一致，对于它们的实用性、诚实性和安全性至关重要。来自人类反馈的强化学习 （RLHF） 是实现这种对齐的常用方法，但它在计算效率和训练稳定性方面面临挑战。最近的方法，如直接偏好优化 （DPO） 和简单偏好优化 （SimPO） 提出了 RLHF 的离线替代方案，通过重新参数化奖励函数来简化流程。然而，DPO 依赖于潜在的次优参考模型，而 SimPO 对固定目标奖励边际的假设可能会导致在不同数据设置中做出次优决策。在这项工作中，我们提出了 （\alpha）-DPO，这是一种自适应偏好优化算法，旨在通过引入动态奖励边际来解决这些限制。具体来说， （\alpha）-DPO 采用自适应偏好分配，平衡策略模型和参考模型，以实现个性化的奖励边际。我们为 （\alpha）-DPO 提供了理论保证，证明了它作为替代优化目标的有效性以及它通过 KL 发散控制平衡对齐和多样性的能力。对 AlpacaEval 2 和 Arena-Hard 的实证评估表明，（\alpha）-DPO 在各种模型设置中始终优于 DPO 和 SimPO，使其成为微调 LLMs。我们的方法在胜率方面取得了显着的提高，凸显了它作为 LLM。
+Aligning large language models (LLMs) with human values and intentions is crucial for their utility, honesty, and safety. Reinforcement learning from human feedback (RLHF) is a popular approach to achieve this alignment, but it faces challenges in computational efficiency and training stability. Recent methods like Direct Preference Optimization (DPO) and Simple Preference Optimization (SimPO) have proposed offline alternatives to RLHF, simplifying the process by reparameterizing the reward function. However, DPO depends on a potentially suboptimal reference model, and SimPO's assumption of a fixed target reward margin may lead to suboptimal decisions in diverse data settings. In this work, we propose (\alpha)-DPO, an adaptive preference optimization algorithm designed to address these limitations by introducing a dynamic reward margin. Specifically, (\alpha)-DPO employs an adaptive preference distribution, balancing the policy model and the reference model to achieve personalized reward margins. We provide theoretical guarantees for (\alpha)-DPO, demonstrating its effectiveness as a surrogate optimization objective and its ability to balance alignment and diversity through KL divergence control. Empirical evaluations on AlpacaEval 2 and Arena-Hard show that (\alpha)-DPO consistently outperforms DPO and SimPO across various model settings, establishing it as a robust approach for fine-tuning LLMs. Our method achieves significant improvements in win rates, highlighting its potential as a powerful tool for LLM alignment.a
+将大型语言模型 （LLMs人类价值观和意图保持一致，对于它们的实用性、诚实性和安全性至关重要。RLHF 是实现这种对齐的常用方法，但它在计算效率和训练稳定性方面面临挑战。最近的方法，如直接偏好优化 （DPO） 和简单偏好优化 （SimPO） 提出了 RLHF 的离线替代方案，通过重新参数化奖励函数来简化流程。然而，DPO 依赖于潜在的次优参考模型，而 SimPO 对固定目标奖励边际的假设可能会导致在不同数据设置中做出次优决策。在这项工作中，我们提出了 （\alpha）-DPO，这是一种自适应偏好优化算法，旨在通过引入动态奖励边际来解决这些限制。具体来说， （\alpha）-DPO 采用自适应偏好分配，平衡策略模型和参考模型，以实现个性化的奖励边际。我们为 （\alpha）-DPO 提供了理论保证，证明了它作为替代优化目标的有效性以及它通过 KL 发散控制平衡对齐和多样性的能力。对 AlpacaEval 2 和 Arena-Hard 的实证评估表明，（\alpha）-DPO 在各种模型设置中始终优于 DPO 和 SimPO，使其成为微调 LLMs。我们的方法在胜率方面取得了显着的提高，凸显了它作为 LLM。
 
 ## 12. Mask-DPO: Generalizable Fine-grained Factuality Alignment of LLMs
-
+通用细粒度事实性对齐
 ### 关键字
+* Hallucination Mitigation 幻觉缓解（通常涉及引导模型聚焦于真实、准确的信息，使得AI助手更可信。）
+* Large Language Model
+* Fine-grained Alignment 细粒度对齐（通过更精确的方式进行模型训练，使其输出内容更加真实、准确。在这个上下文中，它意味着模型可以对每个句子级别的事实性进行对齐，而不仅仅是整体响应，确保只学习真实句子的内容。）
+
 ### 主要内容
+#### 面对的问题
+* LLM在各个领域充当AI助手时会出现幻觉
+* 以前进行响应水平偏好学习的事实对齐方法在训练过程中不可避免地引入了噪音
+#### Mask-DPO技术细节
+将句子级事实性作为mask signal，只从首选样本中事实正确的句子中学习，并防止非首选样本中的事实内容受到惩罚，从而解决了偏好学习中的歧义。
+#### 额外结论：
+使用不同的训练样本缩放策略进一步研究 Mask-DPO 的泛化特性，发现扩展数据集中的主题数量比增加问题数量更有效。
 ### 文章链接
 * <a href="./papers/4078_Mask_DPO_Generalizable_Fi.pdf">查看PDF</a>
 * <a href="https://openreview.net/forum?id=d2H1oTNITn">ICLR链接</a>
 ### 摘要
+Large language models (LLMs) exhibit hallucinations (i.e., unfaithful or nonsensical information) when serving as AI assistants in various domains. Since hallucinations always come with truthful content in the LLM responses, previous factuality alignment methods that conduct response-level preference learning inevitably introduced noises during training. Therefore, this paper proposes a fine-grained factuality alignment method based on Direct Preference Optimization (DPO), called Mask-DPO. Incorporating sentence-level factuality as mask signals, Mask-DPO only learns from factually correct sentences in the preferred samples and prevents the penalty on factual contents in the not preferred samples, which resolves the ambiguity in the preference learning. Extensive experimental results demonstrate that Mask-DPO can significantly improve the factuality of LLMs responses to questions from both in-domain and out-of-domain datasets, although these questions and their corresponding topics are unseen during training. Only trained on the ANAH train set, the score of Llama3.1-8B-Instruct on the ANAH test set is improved from 49.19% to 77.53%, even surpassing the score of Llama3.1-70B-Instruct (53.44%), while its FactScore on the out-of-domain Biography dataset is also improved from 30.29% to 39.39%. We further study the generalization property of Mask-DPO using different training sample scaling strategies and find that scaling the number of topics in the dataset is more effective than the number of questions. We provide a hypothesis of what factual alignment is doing with LLMs, on the implication of this phenomenon, and conduct proof-of-concept experiments to verify it. We hope the method and the findings pave the way for future research on scaling factuality alignment.
+大型语言模型 （LLMs） 在各个领域充当 AI 助手时会出现幻觉（即不忠实或荒谬的信息）。由于幻觉总是伴随着 LLM，因此以前进行响应水平偏好学习的事实对齐方法在训练过程中不可避免地引入了噪音。因此，本文提出了一种基于直接偏好优化 （DPO） 的细粒度事实对齐方法，称为 Mask-DPO。Mask-DPO 将句子级事实性作为掩码信号，只从首选样本中事实正确的句子中学习，并防止非首选样本中的事实内容受到惩罚，从而解决了偏好学习中的歧义。广泛的实验结果表明，Mask-DPO 可以显著提高 LLMs 对域内和域外数据集问题回答的真实性，尽管这些问题及其相应的主题在训练期间是看不到的。仅在 ANAH 训练集上训练，Llama3.1-8B-Instruct 在 ANAH 测试集上的分数从 49.19% 提高到 77.53%，甚至超过了 Llama3.1-70B-Instruct 的分数（53.44%），而它在域外传记数据集上的 FactScore 也从 30.29% 提高到 39.39%。我们使用不同的训练样本缩放策略进一步研究了 Mask-DPO 的泛化特性，发现扩展数据集中的主题数量比增加问题数量更有效。我们提供了一个假设，即事实对齐对 LLMs 的影响，关于这种现象的含义，并进行了概念验证实验来验证它。我们希望该方法和发现为未来关于缩放事实对齐的研究铺平道路。
+
+
+## 13. Step-DPO: Step-wise Preference Optimization for Long-chain Reasoning of LLMs
+长链推理的逐步偏好优化
+### 关键字
+* LLM
+* Mathematical Reasoning
+* DPO
+### 主要内容
+#### 问题
+* 数学推导需要广泛而精确的推理链，对LLM挑战巨大
+* DPO对长链数学推理好处有限，因为采用 DPO 的模型难以识别错误答案中的详细错误。
+* 文中说：这种限制源于缺乏精细的过程监督。
+#### 提出的解决措施Step-DPO
+将**单个推理步骤**视为偏好优化的单元，而不是整体评估答案
+#### 附加的工作
+* 为 Step-DPO 开发了一个数据构建管道，能够创建包含 10K 逐步偏好对的高质量数据集
+* 发现：在 DPO 中，政策模型生成的数据比人类或 GPT-4 生成的数据更有效
+### 文章链接
+<a href="./papers/1691_Step_DPO_Step_wise_Prefer.pdf">查看PDF</a>
+<a href="https://openreview.net/forum?id=H5FUVj0vMd">ICLR链接</a>
+
+### 摘要
+Mathematical reasoning presents a significant challenge for Large Language Models (LLMs) due to the extensive and precise chain of reasoning required for accuracy. Ensuring the correctness of each reasoning step is critical. To address this, we aim to enhance the robustness and factuality of LLMs by learning from human feedback. However, Direct Preference Optimization (DPO) has shown limited benefits for long-chain mathematical reasoning, as models employing DPO struggle to identify detailed errors in incorrect answers. This limitation stems from a lack of fine-grained process supervision. We propose a simple, effective, and data-efficient method called Step-DPO, which treats individual reasoning steps as units for preference optimization rather than evaluating answers holistically. Additionally, we have developed a data construction pipeline for Step-DPO, enabling the creation of a high-quality dataset containing 10K step-wise preference pairs. We also observe that in DPO, the data generated by the policy model is more effective than that produced by humans or GPT-4, due to the former's in-distribution nature. Our findings demonstrate that as few as 10K preference data pairs and fewer than 500 Step-DPO training steps can yield a nearly 3% gain in accuracy on MATH for models with over 70B parameters. Notably, Step-DPO, when applied to Qwen2-72B-Instruct, achieves scores of 70.8% and 94.0% on the test sets of MATH and GSM8K, respectively, surpassing a series of closed-source models, including GPT-4-1106, Claude-3-Opus, and Gemini-1.5-Pro.
+数学推理对大型语言模型 （LLMs，因为准确性需要广泛而精确的推理链。确保每个推理步骤的正确性至关重要。为了解决这个问题，我们的目标是通过学习人类反馈来提高 LLMs。然而，直接偏好优化 （DPO） 对长链数学推理的好处有限，因为采用 DPO 的模型难以识别错误答案中的详细错误。这种限制源于缺乏精细的过程监督。我们提出了一种简单、有效且数据高效的方法，称为 Step-DPO，它将单个推理步骤视为偏好优化的单元，而不是整体评估答案。此外，我们还为 Step-DPO 开发了一个数据构建管道，能够创建包含 10K 逐步偏好对的高质量数据集。我们还观察到，在 DPO 中，由于前者的分布性质，政策模型生成的数据比人类或 GPT-4 生成的数据更有效。我们的研究结果表明，对于参数超过 70B 的模型，只要 10K 个偏好数据对和少于 500 个 Step-DPO 训练步骤，就可以使 MATH 的准确性提高近 3%。值得注意的是，当 Step-DPO 应用于 Qwen2-72B-Struct 时，在 MATH 和 GSM8K 的测试集上分别取得了 70.8% 和 94.0% 的分数，超过了包括 GPT-4-1106、Claude-3-Opus 和 Gemini-1.5-Pro 在内的一系列闭源模型。
+
+## 14. TIS-DPO: Token-level Importance Sampling for Direct Preference Optimization With Estimated Weights
+Token级重要性采样，用于使用估计权重做DPO
+### 关键字
+* LLM
+* Importance Sampling
+* Preference Learning
+### 主要内容
+#### DPO问题
+DPO 是从Bandit Problem（多臂老虎机）衍生的，其中整个响应被视为单个手臂，忽略了 Token 之间的重要性差异，这可能会影响优化效率，难以实现最优结果。
+#### 提出措施
+
+### 文章链接
+<a href="./papers/4038_TIS_DPO_Token_level_Impor.pdf">查看PDF</a>
+<a href="https://openreview.net/forum?id=oF6e2WwxX0">ICLR链接</a>
+
+### 摘要
+Direct Preference Optimization (DPO) has been widely adopted for preference alignment of Large Language Models (LLMs) due to its simplicity and effectiveness. However, DPO is derived as a bandit problem in which the whole response is treated as a single arm, ignoring the importance differences between tokens, which may affect optimization efficiency and make it difficult to achieve optimal results. In this work, we propose that the optimal data for DPO has equal expected rewards for each token in winning and losing responses, as there is no difference in token importance. However, since the optimal dataset is unavailable in practice, we propose using the original dataset for importance sampling to achieve unbiased optimization. Accordingly, we propose a token-level importance sampling DPO objective named TIS-DPO that assigns importance weights to each token based on its reward. Inspired by previous works, we estimate the token importance weights using the difference in prediction probabilities from a pair of contrastive LLMs. We explore three methods to construct these contrastive LLMs: (1) guiding the original LLM with contrastive prompts, (2) training two separate LLMs using winning and losing responses, and (3) performing forward and reverse DPO training with winning and losing responses. Experiments show that TIS-DPO significantly outperforms various baseline methods on harmlessness and helpfulness alignment and summarization tasks. We also visualize the estimated weights, demonstrating their ability to identify key token positions.
+直接偏好优化 （DPO） 因其简单性和有效性而被广泛用于大型语言模型 （LLMs。然而，DPO 是作为老虎机问题衍生的，其中整个响应被视为单个手臂，忽略了 Token 之间的重要性差异，这可能会影响优化效率，难以实现最优结果。在这项工作中，我们提出 DPO 的最佳数据在获胜和失败响应中对每个代币的预期奖励相等，因为代币的重要性没有差异。然而，由于实际中没有最优数据集，我们建议使用原始数据集进行重要性采样，以实现无偏优化。因此，我们提出了一个名为 TIS-DPO 的代币级重要性抽样 DPO 目标，该目标根据每个代币的奖励为每个代币分配重要性权重。受以前工作的启发，我们使用一对对比LLMs。我们探索了三种方法来构建这些对比LLMs：（1） 用对比提示引导原始 LLM，（2） 使用获胜和失败响应训练两个单独的 LLMs，以及 （3） 使用获胜和失败响应进行正向和反向 DPO 训练。实验表明，TIS-DPO 在无害性和有用性对齐和总结任务上明显优于各种基线方法。我们还将估计的权重可视化，展示了他们识别关键代币位置的能力。
 
 ## 占位
 ### 关键字
 ### 主要内容
 ### 文章链接
+<a href="">查看PDF</a>
+<a href="">ICLR链接</a>
+
 ### 摘要
 
 ## 占位
 ### 关键字
 ### 主要内容
 ### 文章链接
+<a href="">查看PDF</a>
+<a href="">ICLR链接</a>
+
 ### 摘要
 
 ## 占位
 ### 关键字
 ### 主要内容
 ### 文章链接
+<a href="">查看PDF</a>
+<a href="">ICLR链接</a>
+
 ### 摘要
 
 ## 占位
 ### 关键字
 ### 主要内容
 ### 文章链接
+<a href="">查看PDF</a>
+<a href="">ICLR链接</a>
+
+
 ### 摘要
 
 ## 占位
 ### 关键字
 ### 主要内容
 ### 文章链接
+<a href="">查看PDF</a>
+<a href="">ICLR链接</a>
+
+
 ### 摘要
 
 ## 占位
 ### 关键字
 ### 主要内容
 ### 文章链接
+<a href="">查看PDF</a>
+<a href="">ICLR链接</a>
+
+
 ### 摘要
 
 ## 占位
 ### 关键字
 ### 主要内容
 ### 文章链接
-### 摘要
+<a href="">查看PDF</a>
+<a href="">ICLR链接</a>
 
-## 占位
-### 关键字
-### 主要内容
-### 文章链接
-### 摘要
 
-## 占位
-### 关键字
-### 主要内容
-### 文章链接
 ### 摘要
