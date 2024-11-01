@@ -330,7 +330,15 @@ Token级重要性采样，用于使用估计权重做DPO
 #### DPO问题
 DPO 是从Bandit Problem（多臂老虎机）衍生的，其中整个响应被视为单个手臂，忽略了 Token 之间的重要性差异，这可能会影响优化效率，难以实现最优结果。
 #### 提出措施
+* 提出建议DPO的最佳数据对于获胜和失败响应中的每个token有相同的预期奖励，因为令牌重要性没有差异
+* 但是，因为实际中无法获得最优数据集，所以建议使用原始数据进行重要性采样，以实现无偏优化
+#### TIS(Token-level Importance Sampling)-DPO
+根据每个令牌的奖励为其分配重要度权重
 
+具体：使用一对"对比性LLM"的预测概率来估计标记重要性权重
+1. 使用对比Prompt指导初始LLM
+2. 使用获胜和失败的响应训练训练两个独立的LLMs
+3. 使用获胜和失败的响应前向和反向的训练DPO
 ### 文章链接
 <a href="./papers/4038_TIS_DPO_Token_level_Impor.pdf">查看PDF</a>
 <a href="https://openreview.net/forum?id=oF6e2WwxX0">ICLR链接</a>
@@ -339,32 +347,65 @@ DPO 是从Bandit Problem（多臂老虎机）衍生的，其中整个响应被�
 Direct Preference Optimization (DPO) has been widely adopted for preference alignment of Large Language Models (LLMs) due to its simplicity and effectiveness. However, DPO is derived as a bandit problem in which the whole response is treated as a single arm, ignoring the importance differences between tokens, which may affect optimization efficiency and make it difficult to achieve optimal results. In this work, we propose that the optimal data for DPO has equal expected rewards for each token in winning and losing responses, as there is no difference in token importance. However, since the optimal dataset is unavailable in practice, we propose using the original dataset for importance sampling to achieve unbiased optimization. Accordingly, we propose a token-level importance sampling DPO objective named TIS-DPO that assigns importance weights to each token based on its reward. Inspired by previous works, we estimate the token importance weights using the difference in prediction probabilities from a pair of contrastive LLMs. We explore three methods to construct these contrastive LLMs: (1) guiding the original LLM with contrastive prompts, (2) training two separate LLMs using winning and losing responses, and (3) performing forward and reverse DPO training with winning and losing responses. Experiments show that TIS-DPO significantly outperforms various baseline methods on harmlessness and helpfulness alignment and summarization tasks. We also visualize the estimated weights, demonstrating their ability to identify key token positions.
 直接偏好优化 （DPO） 因其简单性和有效性而被广泛用于大型语言模型 （LLMs。然而，DPO 是作为老虎机问题衍生的，其中整个响应被视为单个手臂，忽略了 Token 之间的重要性差异，这可能会影响优化效率，难以实现最优结果。在这项工作中，我们提出 DPO 的最佳数据在获胜和失败响应中对每个代币的预期奖励相等，因为代币的重要性没有差异。然而，由于实际中没有最优数据集，我们建议使用原始数据集进行重要性采样，以实现无偏优化。因此，我们提出了一个名为 TIS-DPO 的代币级重要性抽样 DPO 目标，该目标根据每个代币的奖励为每个代币分配重要性权重。受以前工作的启发，我们使用一对对比LLMs。我们探索了三种方法来构建这些对比LLMs：（1） 用对比提示引导原始 LLM，（2） 使用获胜和失败响应训练两个单独的 LLMs，以及 （3） 使用获胜和失败响应进行正向和反向 DPO 训练。实验表明，TIS-DPO 在无害性和有用性对齐和总结任务上明显优于各种基线方法。我们还将估计的权重可视化，展示了他们识别关键代币位置的能力。
 
-## 占位
+## 15. Accelerated Preference Optimization for Large Language Model Alignment
+Alignment的加速偏好优化
 ### 关键字
+* LLM
+* RLHF
+* DPO
 ### 主要内容
+#### 提出问题
+RLHF能否通过动量技术加速
+#### 证明流程
+1. 表明迭代优化算法(Iterative Preference Optimization)可以被视为PPO(近端点方法)
+2. 提出通用的加速优化(APO)框架，统一现有的许多偏好优化，并采用Nestrov动量技术加速LLM对齐
+3. 理论上证明APO可以比标准迭代偏好优化算法(DPO, SPPO等)实现更快的收敛速度
+
 ### 文章链接
-<a href="">查看PDF</a>
-<a href="">ICLR链接</a>
+<a href="./papers/13320_Accelerated_Preference_O.pdf">查看PDF</a>
+<a href="https://openreview.net/forum?id=TROUDY6Wg4">ICLR链接</a>
 
 ### 摘要
+Reinforcement Learning from Human Feedback (RLHF) has emerged as a pivotal tool for aligning large language models (LLMs) with human preferences. Direct Preference Optimization (DPO), one of the most popular approaches, formulates RLHF as a policy optimization problem without explicitly estimating the reward function. It overcomes the stability and efficiency issues of two-step approaches, which typically involve first estimating the reward function and then optimizing the policy via proximal policy optimization (PPO). Since RLHF is essentially an optimization problem, and it is well-known that momentum techniques can accelerate optimization both theoretically and empirically, a natural question arises: Can RLHF be accelerated by momentum? This paper answers this question in the affirmative. In detail, we first show that the iterative preference optimization method can be viewed as a proximal point method. Based on this observation, we propose a general Accelerated Preference Optimization (APO) framework, which unifies many existing preference optimization algorithms and employs Nesterov's momentum technique to speed up the alignment of LLMs. Theoretically, we demonstrate that APO can achieve a faster convergence rate than the standard iterative preference optimization methods, including DPO and SPPO. Empirically, we show the superiority of APO over DPO, iterative DPO, and other strong baselines for RLHF on the AlpacaEval 2.0 benchmark.
+人类反馈强化学习 (RLHF) 已成为使大型语言模型 ( LLMs ) 与人类偏好保持一致的关键工具。直接偏好优化 (DPO) 是最流行的方法之一，它将 RLHF 表述为策略优化问题，而无需明确估计奖励函数。它克服了两步方法的稳定性和效率问题，两步方法通常首先估计奖励函数，然后通过近端策略优化（PPO）来优化策略。由于 RLHF 本质上是一个优化问题，而且众所周知，动量技术可以在理论上和经验上加速优化，所以一个自然的问题就出现了：RLHF 可以通过动量加速吗？本文对这个问题给出了肯定的回答。详细地说，我们首先表明迭代偏好优化方法可以被视为近端点方法。基于这一观察，我们提出了一个通用的加速偏好优化（APO）框架，该框架统一了许多现有的偏好优化算法，并采用 Nesterov 的动量技术来加速LLMs的对齐。理论上，我们证明 APO 可以比标准迭代偏好优化方法（包括 DPO 和 SPPO）实现更快的收敛速度。根据经验，我们在 AlpacaEval 2.0 基准上展示了 APO 相对于 DPO、迭代 DPO 和 RLHF 的其他强大基线的优越性。
 
-## 占位
+## 16. Step-Controlled DPO: Leveraging Stepwise Errors for Enhancing Mathematical Reasoning of Language Models
+利用逐步误差增强语言模型的数学推理(对比13.)
 ### 关键字
+* LLM
+* Mathematical Reasoning
+* Alignment with relative feedback
 ### 主要内容
+#### SCDPO(步进控制DPO)
+通过创建在指定步骤开始出错的数学推理原理的负样本来自动提供逐步错误监督的方法
 ### 文章链接
-<a href="">查看PDF</a>
-<a href="">ICLR链接</a>
+<a href="./papers/1626_Step_Controlled_DPO_Lever.pdf">查看PDF</a>
+<a href="https://openreview.net/forum?id=ZRDa2IT1sQ">ICLR链接</a>
 
 ### 摘要
+Direct Preference Optimization (DPO) has proven effective at improving the performance of large language models (LLMs) on downstream tasks such as reasoning and alignment. In this work, we propose Step-Controlled DPO (SCDPO), a method for automatically providing stepwise error supervision by creating negative samples of mathematical reasoning rationales that start making errors at a specified step. By applying these samples in DPO training, SCDPO can better align the model to avoid reasoning errors and output accurate reasoning steps. Qualitative analysis of the credit assignment of SCDPO and DPO demonstrates the effectiveness of SCDPO at identifying errors in mathematical solutions. We then apply SCDPO to an InternLM2-20B model, resulting in a 20B model that achieves competitive scores of 88.5% on GSM8K and 58.1% on MATH, rivaling all other open-source LLMs, showing the great potential of our method. The code, models and data are released to inspire future work.
+事实证明，直接偏好优化 (DPO) 可以有效提高大型语言模型 ( LLMs ) 在推理和对齐等下游任务上的性能。在这项工作中，我们提出了步进控制 DPO（SCDPO），这是一种通过创建在指定步骤开始出错的数学推理原理的负样本来自动提供逐步错误监督的方法。通过将这些样本应用于DPO训练，SCDPO可以更好地对齐模型，避免推理错误并输出准确的推理步骤。对 SCDPO 和 DPO 的学分分配的定性分析证明了 SCDPO 在识别数学解决方案中的错误方面的有效性。然后，我们将 SCDPO 应用于 InternLM2-20B 模型，得到的 20B 模型在 GSM8K 上获得了 88.5% 的竞争分数，在 MATH 上获得了 58.1% 的竞争分数，可与所有其他开源LLMs相媲美，显示了我们方法的巨大潜力。代码、模型和数据的发布是为了启发未来的工作。
 
-## 占位
+
+## 17. Earlier Tokens Contribute More: Learning Direct Preference Optimization From Temporal Decay Perspective
+
 ### 关键字
+* Preference Optimization
+* RLHF
+* DPO
 ### 主要内容
+#### DPO问题
+DPO存在长度偏差，生成的相应比参考模型的响应更长
+#### 
 ### 文章链接
-<a href="">查看PDF</a>
-<a href="">ICLR链接</a>
+<a href="./papers/6333_Earlier_Tokens_Contribute.pdf">查看PDF</a>
+<a href="https://openreview.net/forum?id=OspqtLVUN5">ICLR链接</a>
 
 ### 摘要
+Direct Preference Optimization (DPO) has gained attention as an efficient alternative to reinforcement learning from human feedback (RLHF) for aligning large language models (LLMs) with human preferences. Despite its advantages, DPO suffers from a length bias, generating responses longer than those from the reference model. Existing solutions like SimPO and SamPO address this issue but uniformly treat the contribution of rewards across sequences, overlooking temporal dynamics. To this end, we propose an enhanced preference optimization method that incorporates a temporal decay factor controlled by a gamma parameter. This dynamic weighting mechanism adjusts the influence of each reward based on its position in the sequence, prioritizing earlier tokens that are more critical for alignment. By adaptively focusing on more relevant feedback, our approach mitigates overfitting to less pertinent data and remains responsive to evolving human preferences. Experimental results on several benchmarks show that our approach consistently outperforms vanilla DPO by 5.9-8.8 points on AlpacaEval 2 and 3.3-9.7 points on Arena-Hard across different model architectures and sizes.
+直接偏好优化 (DPO) 作为人类反馈强化学习 (RLHF) 的有效替代方案而受到关注，用于使大型语言模型 ( LLMs ) 与人类偏好保持一致。尽管有其优点，DPO 仍存在长度偏差，生成的响应比参考模型的响应更长。 SimPO 和 SamPO 等现有解决方案解决了这个问题，但统一对待跨序列的奖励贡献，忽略了时间动态。为此，我们提出了一种增强的偏好优化方法，该方法结合了由伽玛参数控制的时间衰减因子。这种动态加权机制根据每个奖励在序列中的位置来调整每个奖励的影响，优先考虑对对齐更重要的早期标记。通过自适应地关注更相关的反馈，我们的方法可以减轻对不太相关的数据的过度拟合，并保持对不断变化的人类偏好的响应。多个基准测试的实验结果表明，在不同的模型架构和大小上，我们的方法在 AlpacaEval 2 上始终优于普通 DPO 5.9-8.8 点，在 Arena-Hard 上优于普通 DPO 3.3-9.7 点。
+
+
 
 ## 占位
 ### 关键字
@@ -372,8 +413,6 @@ Direct Preference Optimization (DPO) has been widely adopted for preference alig
 ### 文章链接
 <a href="">查看PDF</a>
 <a href="">ICLR链接</a>
-
-
 ### 摘要
 
 ## 占位
