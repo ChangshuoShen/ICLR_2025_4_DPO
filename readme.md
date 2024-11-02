@@ -60,7 +60,7 @@ address the non-stationarity preference drift using exponential reweighting stra
 * <a href="https://openreview.net/forum?id=PabAln0jjB">ICLR中链接</a>
 
 ### 摘要
-Reinforcement learning from human feedback (RLHF) aligns Large Language Models (LLMs) with human preferences. However, these preferences can often change over time due to external factors (e.g. environment change and societal influence). Consequently, what was wrong then might be right now. Current preference optimization algorithms do not account for temporal preference drift in their modeling, which can lead to severe misalignment. To address this limitation, we use a Dynamic Bradley-Terry model that models preferences via time-dependent reward functions, and propose Non-Stationary Direct Preference Optimisation (NS-DPO). By introducing a discount parameter in the loss function, NS-DPO applies exponential weighting, which proportionally focuses learning on more time-relevant datapoints. We theoretically analyse the convergence of NS-DPO in the offline setting, providing upper bounds on the estimation error caused by non-stationary preferences. Finally, we demonstrate the effectiveness of NS-DPO1 for fine-tuning LLMs in scenarios with drifting preferences. By simulating preference drift using renowned reward models and modifying popular LLM datasets accordingly, we show that NS-DPO fine-tuned LLMs remain robust under non-stationarity, significantly outperforming baseline algorithms that ignore temporal preference changes, without sacrificing performance in stationary cases.
+Reinforcement learning from human feedback (RLHF) aligns Large Language Models (LLMs) with human preferences. However, these preferences can often change over time due to external factors (e.g. environment change and societal influence). Consequently, what was wrong then might be right now. Current preference optimization algorithms do not account for temporal preference drift in their modeling, which can lead to severe misalignment. To address this limitation, we use a Dynamic Bradley-Terry model that models preferences via time-dependent reward functions, and propose Non-Stationary Direct Preference Optimization (NS-DPO). By introducing a discount parameter in the loss function, NS-DPO applies exponential weighting, which proportionally focuses learning on more time-relevant datapoints. We theoretically analyse the convergence of NS-DPO in the offline setting, providing upper bounds on the estimation error caused by non-stationary preferences. Finally, we demonstrate the effectiveness of NS-DPO1 for fine-tuning LLMs in scenarios with drifting preferences. By simulating preference drift using renowned reward models and modifying popular LLM datasets accordingly, we show that NS-DPO fine-tuned LLMs remain robust under non-stationarity, significantly outperforming baseline algorithms that ignore temporal preference changes, without sacrificing performance in stationary cases.
 来自人类反馈的强化学习 （RLHF） 使大型语言模型 （LLMs人类偏好保持一致。然而，由于外部因素（例如环境变化和社会影响），这些偏好通常会随着时间的推移而改变。因此，当时的错误可能现在就是正确的。当前的偏好优化算法在其建模中没有考虑时间偏好漂移，这可能导致严重的错位。为了解决这一限制，我们使用了动态 Bradley-Terry 模型，该模型通过瞬态奖励函数对偏好进行建模，并提出了非平稳直接偏好优化 （NS-DPO）。通过在损失函数中引入 discount 参数，NS-DPO 应用指数加权，按比例将学习集中在与时间相关的更多数据点上。我们从理论上分析了 NS-DPO 在离线设置中的收敛性，提供了由非平稳偏好引起的估计误差的上限。最后，我们证明了 NS-DPO1 在具有漂移偏好的情况下微调 LLMs。通过使用著名的奖励模型模拟偏好漂移并相应地修改流行的 LLM 数据集，我们表明 NS-DPO 微调LLMs 在非平稳性下保持稳健性，明显优于忽略时间偏好变化的基线算法，而不会牺牲平稳情况下的性能。
 
 ## 3. Iterative DPO with An Improvement Model for Fine-tuning Diffusion Models
@@ -313,8 +313,8 @@ Large language models (LLMs) exhibit hallucinations (i.e., unfaithful or nonsens
 * 为 Step-DPO 开发了一个数据构建管道，能够创建包含 10K 逐步偏好对的高质量数据集
 * 发现：在 DPO 中，政策模型生成的数据比人类或 GPT-4 生成的数据更有效
 ### 文章链接
-<a href="./papers/1691_Step_DPO_Step_wise_Prefer.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=H5FUVj0vMd">ICLR链接</a>
+* <a href="./papers/1691_Step_DPO_Step_wise_Prefer.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=H5FUVj0vMd">ICLR链接</a>
 
 ### 摘要
 Mathematical reasoning presents a significant challenge for Large Language Models (LLMs) due to the extensive and precise chain of reasoning required for accuracy. Ensuring the correctness of each reasoning step is critical. To address this, we aim to enhance the robustness and factuality of LLMs by learning from human feedback. However, Direct Preference Optimization (DPO) has shown limited benefits for long-chain mathematical reasoning, as models employing DPO struggle to identify detailed errors in incorrect answers. This limitation stems from a lack of fine-grained process supervision. We propose a simple, effective, and data-efficient method called Step-DPO, which treats individual reasoning steps as units for preference optimization rather than evaluating answers holistically. Additionally, we have developed a data construction pipeline for Step-DPO, enabling the creation of a high-quality dataset containing 10K step-wise preference pairs. We also observe that in DPO, the data generated by the policy model is more effective than that produced by humans or GPT-4, due to the former's in-distribution nature. Our findings demonstrate that as few as 10K preference data pairs and fewer than 500 Step-DPO training steps can yield a nearly 3% gain in accuracy on MATH for models with over 70B parameters. Notably, Step-DPO, when applied to Qwen2-72B-Instruct, achieves scores of 70.8% and 94.0% on the test sets of MATH and GSM8K, respectively, surpassing a series of closed-source models, including GPT-4-1106, Claude-3-Opus, and Gemini-1.5-Pro.
@@ -340,8 +340,8 @@ DPO 是从Bandit Problem（多臂老虎机）衍生的，其中整个响应被�
 2. 使用获胜和失败的响应训练训练两个独立的LLMs
 3. 使用获胜和失败的响应前向和反向的训练DPO
 ### 文章链接
-<a href="./papers/4038_TIS_DPO_Token_level_Impor.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=oF6e2WwxX0">ICLR链接</a>
+* <a href="./papers/4038_TIS_DPO_Token_level_Impor.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=oF6e2WwxX0">ICLR链接</a>
 
 ### 摘要
 Direct Preference Optimization (DPO) has been widely adopted for preference alignment of Large Language Models (LLMs) due to its simplicity and effectiveness. However, DPO is derived as a bandit problem in which the whole response is treated as a single arm, ignoring the importance differences between tokens, which may affect optimization efficiency and make it difficult to achieve optimal results. In this work, we propose that the optimal data for DPO has equal expected rewards for each token in winning and losing responses, as there is no difference in token importance. However, since the optimal dataset is unavailable in practice, we propose using the original dataset for importance sampling to achieve unbiased optimization. Accordingly, we propose a token-level importance sampling DPO objective named TIS-DPO that assigns importance weights to each token based on its reward. Inspired by previous works, we estimate the token importance weights using the difference in prediction probabilities from a pair of contrastive LLMs. We explore three methods to construct these contrastive LLMs: (1) guiding the original LLM with contrastive prompts, (2) training two separate LLMs using winning and losing responses, and (3) performing forward and reverse DPO training with winning and losing responses. Experiments show that TIS-DPO significantly outperforms various baseline methods on harmlessness and helpfulness alignment and summarization tasks. We also visualize the estimated weights, demonstrating their ability to identify key token positions.
@@ -362,8 +362,8 @@ RLHF能否通过动量技术加速
 3. 理论上证明APO可以比标准迭代偏好优化算法(DPO, SPPO等)实现更快的收敛速度
 
 ### 文章链接
-<a href="./papers/13320_Accelerated_Preference_O.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=TROUDY6Wg4">ICLR链接</a>
+* <a href="./papers/13320_Accelerated_Preference_O.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=TROUDY6Wg4">ICLR链接</a>
 
 ### 摘要
 Reinforcement Learning from Human Feedback (RLHF) has emerged as a pivotal tool for aligning large language models (LLMs) with human preferences. Direct Preference Optimization (DPO), one of the most popular approaches, formulates RLHF as a policy optimization problem without explicitly estimating the reward function. It overcomes the stability and efficiency issues of two-step approaches, which typically involve first estimating the reward function and then optimizing the policy via proximal policy optimization (PPO). Since RLHF is essentially an optimization problem, and it is well-known that momentum techniques can accelerate optimization both theoretically and empirically, a natural question arises: Can RLHF be accelerated by momentum? This paper answers this question in the affirmative. In detail, we first show that the iterative preference optimization method can be viewed as a proximal point method. Based on this observation, we propose a general Accelerated Preference Optimization (APO) framework, which unifies many existing preference optimization algorithms and employs Nesterov's momentum technique to speed up the alignment of LLMs. Theoretically, we demonstrate that APO can achieve a faster convergence rate than the standard iterative preference optimization methods, including DPO and SPPO. Empirically, we show the superiority of APO over DPO, iterative DPO, and other strong baselines for RLHF on the AlpacaEval 2.0 benchmark.
@@ -387,8 +387,8 @@ Reinforcement Learning from Human Feedback (RLHF) has emerged as a pivotal tool 
 #### 效果
 通过自适应地关注更相关的反馈，这种方式可以减轻对不太相关的数据的过度拟合，并保持对不断变化的人类偏好的响应
 ### 文章链接
-<a href="./papers/6333_Earlier_Tokens_Contribute.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=OspqtLVUN5">ICLR链接</a>
+* <a href="./papers/6333_Earlier_Tokens_Contribute.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=OspqtLVUN5">ICLR链接</a>
 
 ### 摘要
 Direct Preference Optimization (DPO) has gained attention as an efficient alternative to reinforcement learning from human feedback (RLHF) for aligning large language models (LLMs) with human preferences. Despite its advantages, DPO suffers from a length bias, generating responses longer than those from the reference model. Existing solutions like SimPO and SamPO address this issue but uniformly treat the contribution of rewards across sequences, overlooking temporal dynamics. To this end, we propose an enhanced preference optimization method that incorporates a temporal decay factor controlled by a  parameter. This dynamic weighting mechanism adjusts the influence of each reward based on its position in the sequence, prioritizing earlier tokens that are more critical for alignment. By adaptively focusing on more relevant feedback, our approach mitigates overfitting to less pertinent data and remains responsive to evolving human preferences. Experimental results on several benchmarks show that our approach consistently outperforms vanilla DPO by 5.9-8.8 points on AlpacaEval 2 and 3.3-9.7 points on Arena-Hard across different model architectures and sizes.
@@ -406,8 +406,8 @@ Direct Preference Optimization (DPO) has gained attention as an efficient altern
 #### SCDPO(步进控制DPO)
 通过创建在指定步骤开始出错的数学推理原理的负样本来自动提供逐步错误监督的方法
 ### 文章链接
-<a href="./papers/1626_Step_Controlled_DPO_Lever.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=ZRDa2IT1sQ">ICLR链接</a>
+* <a href="./papers/1626_Step_Controlled_DPO_Lever.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=ZRDa2IT1sQ">ICLR链接</a>
 
 ### 摘要
 Direct Preference Optimization (DPO) has proven effective at improving the performance of large language models (LLMs) on downstream tasks such as reasoning and alignment. In this work, we propose Step-Controlled DPO (SCDPO), a method for automatically providing stepwise error supervision by creating negative samples of mathematical reasoning rationales that start making errors at a specified step. By applying these samples in DPO training, SCDPO can better align the model to avoid reasoning errors and output accurate reasoning steps. Qualitative analysis of the credit assignment of SCDPO and DPO demonstrates the effectiveness of SCDPO at identifying errors in mathematical solutions. We then apply SCDPO to an InternLM2-20B model, resulting in a 20B model that achieves competitive scores of 88.5% on GSM8K and 58.1% on MATH, rivaling all other open-source LLMs, showing the great potential of our method. The code, models and data are released to inspire future work.
@@ -427,8 +427,8 @@ Direct Preference Optimization (DPO) has proven effective at improving the perfo
 * 使用注意力值来识别和过滤掉模型可能错误关注的被拒绝的响应，使用注意力感知选择来构建`选择/拒绝对`而不依赖于人工注释、额外数据、外部模型或API
 
 ### 文章链接
-<a href="./papers/1438_MIA_DPO_Multi_Image_Augme.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=f7WBRSuf9l">ICLR链接</a>
+* <a href="./papers/1438_MIA_DPO_Multi_Image_Augme.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=f7WBRSuf9l">ICLR链接</a>
 
 ### 摘要
 Visual preference alignment involves training Large Vision-Language Models (LVLMs) to predict human preferences between visual inputs. This is typically achieved by using labeled datasets of chosen/rejected pairs and employing optimization algorithms like direct preference optimization (DPO). Existing visual alignment methods, primarily designed for single-image scenarios, struggle to effectively handle the complexity of multi-image tasks due to the scarcity of diverse training data and the high cost of annotating chosen/rejected pairs. We present Multi-Image Augmented Direct Preference Optimization (MIA-DPO), a visual preference alignment approach that effectively handles multi-image inputs. MIA-DPO mitigates the scarcity of diverse multi-image training data by extending single-image data with unrelated images arranged in grid collages or pic-in-pic formats, significantly reducing the costs associated with multi-image data annotations. Our observation reveals that attention values of LVLMs vary considerably across different images. We use attention values to identify and filter out rejected responses the model may have mistakenly focused on. Our attention-aware selection for constructing the chosen/rejected pairs without relying on (i) human annotation, (ii) extra data, and (iii) external models or APIs. MIA-DPO is compatible with various architectures and outperforms existing methods on five multi-image benchmarks, achieving an average performance boost of 3.0% on LLaVA-v1.5 and 4.3% on the recent InternLM-XC2.5. Moreover, MIA-DPO has a minimal effect on the model's ability to understand single images.
@@ -456,8 +456,8 @@ Visual preference alignment involves training Large Vision-Language Models (LVLM
 * 尝试通过在 ProFS 和 DPO 之间建立理论和经验联系，将基于调整的对齐与编辑联系起来，表明 ProFS 可以解释为`单个 DPO 步骤的去噪版本`!!。
 
 ### 文章链接
-<a href="./papers/13296_Model_Editing_as_a_Robus.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=lOi6FtIwR8">ICLR链接</a>
+* <a href="./papers/13296_Model_Editing_as_a_Robus.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=lOi6FtIwR8">ICLR链接</a>
 
 ### 摘要
 Recent alignment algorithms such as direct preference optimization (DPO) have been developed to improve the safety of large language models (LLMs) by training these models to match human behaviors exemplified by preference data. However, these methods are both computationally intensive and lacking in controllability and transparency, inhibiting their widespread use. Furthermore, these tuning-based methods require large-scale preference data for training and are susceptible to noisy preference data. In this paper, we introduce a tuning-free alignment alternative, ProFS (Projection Filter for Subspaces), and demonstrate its effectiveness under the use case of toxicity reduction. Grounded on theory from factor analysis, ProFS is a sample-efficient model editing approach that identifies a toxic subspace in the model parameter space and reduces model toxicity by projecting away the detected subspace. The toxic subspace is identified by extracting preference data embeddings from the language model, and removing non-toxic information from these embeddings. We show that ProFS is more sample-efficient than DPO, further showcasing greater robustness to noisy data. Finally, we attempt to connect tuning based alignment with editing, by establishing both theoretical and empirical connections between ProFS and DPO, showing that ProFS can be interpreted as a denoised version of a single DPO step.
@@ -481,8 +481,8 @@ LLM微调的`学习动态`
 4. 扩展上述框架，并强调了一种独特的“挤压效应”，以解释之前在off-policy DPO中观察到的现象，即运行 DPO 时间过长甚至会导致所需输出的可能性降低。
 5. 该框架还帮助理解on-policy DPO和其他变体的优势
 ### 文章链接
-<a href="./papers/4818_Learning_Dynamics_of_LLM_.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=tPNHOoZFl9">ICLR链接</a>
+* <a href="./papers/4818_Learning_Dynamics_of_LLM_.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=tPNHOoZFl9">ICLR链接</a>
 
 ### 摘要
 Learning dynamics, which describes how the learning of specific training examples influences the model's predictions on other examples, gives us a powerful tool for understanding the behavior of deep learning systems. We study the learning dynamics of large language models during different types of finetuning, by analyzing the step-wise decomposition of how influence accumulates among different potential responses. Our framework allows a uniform interpretation of many interesting observations about the training of popular algorithms for both instruction tuning and preference tuning. In particular, we propose a hypothetical explanation of why specific types of hallucination are strengthened after finetuning, e.g., the model might use phrases or facts in the response for question B to answer question A, or the model might keep repeating similar simple phrases when generating responses. We also extend our framework and highlight a unique ``squeezing effect'' to explain a previously observed phenomenon in off-policy direct preference optimization (DPO), where running DPO for too long makes even the desired outputs less likely. This framework also provides insights into where the benefits of on-policy DPO and other variants come from. The analysis not only provides a novel perspective of understanding LLM's finetuning but also inspires a simple, effective method to improve alignment performance.
@@ -505,8 +505,8 @@ Learning dynamics, which describes how the learning of specific training example
 * 其推导的学习保证表明，在特定条件下，使用DPO的模型能以极高的概率在未见数据上分辨出prefered响应
 
 ### 文章链接
-<a href="./papers/10640_On_the_Generalization_of.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=bGkPZtisSm">ICLR链接</a>
+* <a href="./papers/10640_On_the_Generalization_of.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=bGkPZtisSm">ICLR链接</a>
 
 ### 摘要
 Large language models (LLMs) have demonstrated remarkable capabilities but often struggle to align with human preferences, leading to harmful or undesirable outputs. Preference learning, which trains models to distinguish between preferred and non-preferred responses based on human feedback, has become a crucial component for ensuring that LLMs align with human values. Despite the widespread adoption in real-world systems, a thorough theoretical understanding of the generalization guarantees for these models remains lacking. This paper bridges that gap by introducing a new theoretical framework to analyze the generalization guarantees of models trained with direct preference optimization. While existing generalization theory often focuses on overparameterized models achieving near-optimal loss or models independent of the training process, our framework rigorously assesses how well models generalize after a finite number of gradient steps, reflecting real-world LLM training practices. By analyzing the reward margin associated with each sample and its trajectory throughout training, we can effectively bound the generalization error. We derive learning guarantees showing that, under specific conditions, models trained with DPO can correctly discern preferred responses on unseen data with high probability. These insights are empirically validated on contemporary LLMs, underscoring the practical relevance of our theory.
@@ -539,8 +539,8 @@ Large language models (LLMs) have demonstrated remarkable capabilities but often
 
 通过对三种类别分别应用量身定制的策略来提高DPO的有效性
 ### 相关链接
-<a href="./papers/12006_Anchored_Alignment_for_S.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=mkE9Yx4wHY">ICLR链接</a>
+* <a href="./papers/12006_Anchored_Alignment_for_S.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=mkE9Yx4wHY">ICLR链接</a>
 
 ### 摘要
 In this work, we introduce a methodology for alignment designed to enhance the ability of large language models (LLMs) to articulate their reasoning—\textit{self-explanation}—even in the absence of annotated rationale explanations. Our alignment methodology comprises three key components: explanation quality assessment, self-instruction dataset generation, and model alignment. Additionally, we present a novel technique called \textit{Alignment with Anchor Preference Pairs}, which improves the selection of preference pairs by categorizing model outputs into three groups: consistently correct, consistently incorrect, and variable. By applying tailored strategies to each category, we enhance the effectiveness of Direct Preference Optimization (DPO). Our experimental results demonstrate that this approach significantly improves explanation quality while maintaining accuracy compared to other fine-tuning strategies.
@@ -561,16 +561,160 @@ In this work, we introduce a methodology for alignment designed to enhance the a
 1. 将这种现象称为`Likelihood Displacement`
 2. 这种现象可能是灾难性的，会将概率质量从Prefered Response转到语义相反的Response上
 3. 在调整模型拒绝一些不安全的prompt的时候，发现这种Displacement会将概率质量从首选的拒绝反应转向有害反应，无意中导致Unalignment
-
+4. 从理论上描述Likelihood Displacement是由诱导相似嵌入的偏好驱动的，这是由居中隐藏嵌入相似性（CHES， centered hidden embedding similarity）得分来衡量的。
+5. 强调以足够独特的偏好来整理数据的重要性
 ### 相关链接
-<a href="./papers/7503_Unintentional_Unalignment.pdf">查看PDF</a>
-<a href="https://openreview.net/forum?id=uaMSBJDnRv">ICLR链接</a>
+* <a href="./papers/7503_Unintentional_Unalignment.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=uaMSBJDnRv">ICLR链接</a>
 
 ### 摘要
 Direct Preference Optimization (DPO), and its numerous variants, are increasingly used for aligning language models. Although they are designed to teach a model to generate preferred responses more frequently relative to dispreferred responses, prior work has observed that the likelihood of preferred responses often decreases during training. The current work sheds light on the causes and implications of this counter-intuitive phenomenon, which we term likelihood displacement. We demonstrate that likelihood displacement can be catastrophic, shifting probability mass from preferred responses to semantically opposite ones. As a simple example, training a model to prefer over can sharply increase the probability of . Moreover, when aligning the model to refuse unsafe prompts, we show that such displacement can unintentionally lead to unalignment, by shifting probability mass from preferred refusal responses to harmful responses (e.g., reducing the refusal rate of Llama-3-8B-Instruct from 74.4% to 33.4%). We theoretically characterize that likelihood displacement is driven by preferences that induce similar embeddings, as measured by a centered hidden embedding similarity (CHES) score. Empirically, the CHES score enables identifying which training samples contribute most to likelihood displacement in a given dataset. Filtering out these samples effectively mitigated unintentional unalignment in our experiments. More broadly, our results highlight the importance of curating data with sufficiently distinct preferences, for which we believe the CHES score may prove valuable.
 直接偏好优化 (DPO) 及其众多变体越来越多地用于对齐语言模型。尽管它们的目的是教导模型相对于不良反应更频繁地生成首选反应，但先前的工作已经观察到，在训练期间，首选反应的可能性通常会降低。目前的工作揭示了这种反直觉现象的原因和影响，我们将其称为似然位移。我们证明，似然位移可能是灾难性的，将概率质量从首选响应转移到语义相反的响应。举一个简单的例子，训练一个模型以使其更喜欢 超过 可以急剧增加概率 。此外，当调整模型以拒绝不安全提示时，我们表明，通过将概率质量从首选拒绝响应转移到有害响应（例如，将 Llama-3-8B-Instruct 的拒绝率从 74.4 降低），这种位移可能会无意中导致不对齐 。 % 至 33.4%）。我们从理论上描述了似然位移是由引起相似嵌入的偏好驱动的，通过中心隐藏嵌入相似性（CHES）得分来衡量。根据经验，CHES 分数能够识别哪些训练样本对给定数据集中的似然位移贡献最大。过滤掉这些样本有效地减轻了我们实验中无意的未对齐情况。更广泛地说，我们的结果强调了以足够独特的偏好来整理数据的重要性，我们相信 CHES 分数可能会证明这一点很有价值。
 
 
+## 24. Combating inherent noise for direct preference optimization
+对抗固有噪音以实现DPO
+### 关键字
+* DPO
+### 主要内容
+#### DPO训练的问题
+* DPO训练中使用的偏好数据的质量很大程度上被忽视了
+* 当前的数据集都包含噪音标签
+#### 技术细节
+* 将噪音感知指标加入DPO目标中
+    * 注释者内部置信度
+    * 注视者间稳定性
+有助于识别和减轻噪音数据的影响
+* 引入Adaptive-DPO损失函数，通过两种方式改善DPO损失
+    * 减少噪声样本的影响
+    * 放大干净样本的影响
+
+### 相关链接
+* <a href="./papers/2094_Combating_inherent_noise_.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=MlxeUVCQgD">ICLR链接</a>
+
+### 摘要
+Direct Preference Optimization (DPO) has recently gained traction as a promising approach to align large models with human feedback. It is notable for its effectiveness and ease of application across various models, including Large Language Models (LLMs) and Diffusion Models (DMs). However, the quality of preference data used in DPO training has been largely overlooked. Current datasets, whether annotated by deep learning metrics or crowd-sourced human judgments, often contain noisy labels. This noise can adversely affect the performance of DPO. To address this issue, we propose a novel approach that incorporates a noise-aware metric into the DPO objective. This metric, which includes intra-annotator confidence and inter-annotator stability, helps identify and mitigate the impact of noisy data. We introduce an Adaptive-DPO loss function which improves the DPO loss in two ways: one aims to reduce the influence of noisy samples, while the other is to amplify the impact of clean samples. Our experiments demonstrate that this method effectively handles both synthetic and natural noisy data, leading to improved performance in visual and textual generation tasks. This underscores the practical value of our approach in enhancing model robustness amidst noisy preference data.
+直接偏好优化（DPO）最近作为一种将大型模型与人类反馈结合起来的有前途的方法而受到关注。它以其在各种模型中的有效性和易用性而闻名，包括大型语言模型 ( LLMs ) 和扩散模型 (DM)。然而，DPO 培训中使用的偏好数据的质量在很大程度上被忽视了。当前的数据集，无论是通过深度学习指标还是众包的人类判断来注释，通常都包含嘈杂的标签。这种噪音会对 DPO 的性能产生不利影响。为了解决这个问题，我们提出了一种新颖的方法，将噪声感知指标纳入 DPO 目标中。该指标包括注释者内部置信度和注释者间稳定性，有助于识别和减轻噪声数据的影响。我们引入了 Adaptive-DPO 损失函数，它通过两种方式改善 DPO 损失：一是减少噪声样本的影响，二是放大干净样本的影响。我们的实验表明，该方法可以有效处理合成和自然噪声数据，从而提高视觉和文本生成任务的性能。这强调了我们的方法在嘈杂的偏好数据中增强模型鲁棒性的实用价值。
+
+
+## 25. On Extending Direct Preference Optimization to Accommodate Ties
+关于扩展DPO以适应平局
+### 关键字
+* Preference Optimization
+* Ties(此处应该是指平局)
+* DPO
+* Language Model
+* Machine Translation
+* Summarization
+
+### 主要内容
+#### DPO变体
+推导并研究两个DPO变体，明确模拟了在成对比较中声明平局的可能性
+* 将DPO中Bradley-Terry模型换成Rao-Kupper模型以及Davison中的两个著名的扩展建模，将平局概率作为明确偏好的替代方案
+    * Bradley-Terry模型：概率模型，用于评估成对的胜出模型，不允许平局，只有一方胜出$P(i > j) = \frac{p_i}{p_i + p_j}$
+    * Rao-Kupper模型：上面模型的扩展，考虑平局的情况$p(i > j) = \frac{p_i}{p_i + p_j + \delta}; p(i = j) = \frac{\delta}{p_i + p_j + \delta}$
+    * Davidson模型：进一步扩展，适用于有高频率平局的情况$p(i > j) = \frac{p_i}{p_i + p_j}(1 - \delta); p(i = i) = \delta $
+* 在翻译和摘要的任务上验证了可以将显示标记关系添加到这些DPO变体的数据集中，而不会出现将相同的关系呈现给DPO时观察到的任务性能下降
+* `凭经验发现`，包含关系会导致相对于通过KL散度衡量的参考策略具有更强的正则性
+
+### 相关链接
+* <a href="./papers/3051_On_Extending_Direct_Prefe.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=h71cSd2loX">ICLR链接</a>
+
+### 摘要
+We derive and investigate two DPO variants that explicitly model the possibility of declaring a tie in pair-wise comparisons. We replace the Bradley-Terry model in DPO with two well-known modeling extensions, by Rao and Kupper and by Davidson, that assign probability to ties as alternatives to clear preferences. Our experiments in neural machine translation and summarization show that explicitly labeled ties can be added to the datasets for these DPO variants without the degradation in task performance that is observed when the same tied pairs are presented to DPO. We find empirically that the inclusion of ties leads to stronger regularization with respect to the reference policy as measured by KL divergence, and we see this even for DPO in its original form. These findings motivate and enable the inclusion of tied pairs in preference optimization as opposed to simply discarding them.
+我们推导并研究了两个 DPO 变体，它们明确模拟了在成对比较中声明平局的可能性。我们将 DPO 中的 Bradley-Terry 模型替换为 Rao 和 Kupper 以及 Davidson 的两个著名的建模扩展，它们将概率分配给关系作为明确偏好的替代方案。我们在神经机器翻译和摘要方面的实验表明，可以将显式标记的关系添加到这些 DPO 变体的数据集中，而不会出现将相同的关系对呈现给 DPO 时观察到的任务性能下降。我们凭经验发现，包含关系会导致相对于通过 KL 散度衡量的参考策略更强的正则化，即使对于原始形式的 DPO，我们也看到了这一点。这些发现激励并使得将绑定对纳入偏好优化中而不是简单地丢弃它们。
+
+
+## 26. Hybrid Preference Optimization: Augmenting Direct Preference Optimization with Auxiliary Objectives
+混合偏好优化：通过辅助目标增强DPO
+### 关键字
+* LLM
+* Alignment
+* RL
+* DPO
+
+### 主要内容
+#### DPO问题
+* 虽然 DPO 提供了基于最大似然估计(MLE)的更简单的框架，但它损害了调整语言模型的能力，以便根据LLM设计者的偏好轻松最大化不可微目标
+* 这些可能既不符合用户偏好，甚至也无法通过二进制偏好数据轻松捕获。
+#### HPO：结合DPO和RL
+为了利用DPO的简单性和性能以及RL的通用型，提出了一种 DPO 和 RLHF 之间的混合方法。通过`对 DPO 的隐式奖励分解`进行简单的增强，允许调整LLMs ，以使用离线 RL 最大化一组任意辅助奖励。
+
+### 相关链接
+* <a href="./papers/4013_Hybrid_Preference_Optimiz.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=F5nWSf9etp">ICLR链接</a>
+
+### 摘要
+For aligning large language models (LLMs), prior work has leveraged reinforcement learning via human feedback (RLHF) or variations of direct preference optimization (DPO). While DPO offers a simpler framework based on maximum likelihood estimation, it compromises on the ability to tune language models to easily maximize non-differentiable objectives according to the LLM designer's preferences (e.g., using simpler language or minimizing specific kinds of harmful content). These may neither align with user preferences nor even be able to be captured tractably by binary preference data. To leverage the simplicity and performance of DPO with the generalizability of RL, we propose a hybrid approach between DPO and RLHF. With a simple augmentation to the implicit reward decomposition of DPO, we allow for tuning LLMs to maximize a set of arbitrary auxiliary rewards using offline RL. The proposed method, Hybrid Preference Optimization (HPO), shows the ability to effectively generalize to both user preferences and auxiliary designer objectives, while preserving alignment performance across a range of challenging benchmarks and model sizes.
+为了调整大型语言模型（ LLMs ），先前的工作通过人类反馈（RLHF）或直接偏好优化（DPO）的变体利用强化学习。虽然 DPO 提供了基于最大似然估计的更简单的框架，但它损害了调整语言模型的能力，以便根据LLM设计者的偏好轻松最大化不可微目标（例如，使用更简单的语言或最小化特定类型的有害内容）。这些可能既不符合用户偏好，甚至也无法通过二进制偏好数据轻松捕获。为了利用 DPO 的简单性和性能以及 RL 的通用性，我们提出了一种 DPO 和 RLHF 之间的混合方法。通过对 DPO 的隐式奖励分解进行简单的增强，我们允许调整LLMs ，以使用离线 RL 最大化一组任意辅助奖励。所提出的方法，混合偏好优化（HPO），显示了有效概括用户偏好和辅助设计者目标的能力，同时在一系列具有挑战性的基准和模型大小中保持对齐性能。
+
+
+## 27. Bridging and Modeling Correlations in Pairwise Data for Direct Preference Optimization
+用于DPO的成对数据中的桥接和建模相关性
+### 关键字
+* LLM
+* Alignment
+* Preference optimization
+
+### 主要内容
+#### DPO数据集的问题
+成对数据中的winning response和losing response是单独生成的，导致它们之间的相关性较弱以及对齐性能不佳
+#### 此工作针对数据生成
+提出一种有效的成对数据桥接和建模相关性框架，BMC(Bridging & Modeling Correlations)
+
+具体细节：
+1. 通过有针对性的修改来提高成对偏好信号的一致性和信息量，以获胜响应为参考，通过改进失败响应来合成伪获胜响应。
+2. 发现仅 DPO 不足以对这些相关性进行建模并捕获细微的变化。因此，建议通过在训练期间动态利用策略模型的置信度来学习token级相关性。
+### 相关链接
+* <a href="./papers/6425_Bridging_and_Modeling_Cor.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=hRwxZmcvW9">ICLR链接</a>
+
+### 摘要
+Direct preference optimization (DPO), a widely adopted offline preference optimization algorithm, aims to align large language models (LLMs) with human-desired behaviors using pairwise preference data. However, the winning response and the losing response within pairwise data are generated isolatedly, leading to weak correlations between them as well as suboptimal alignment performance. To address this issue, we propose an effective framework for Bridging and Modeling Correlations in pairwise data, named BMC. Firstly, we increase the consistency and informativeness of the pairwise preference signals through targeted modifications, synthesizing a pseudo-winning response by improving the losing response with the winning response as a reference. Secondly, we identify that DPO alone is insufficient to model these correlations and capture nuanced variations. Therefore, we propose learning token-level correlations by dynamically leveraging the policy model's confidence during training. Comprehensive experiments on QA, math, and instruction-following tasks demonstrate the effectiveness of our approach, significantly surpassing competitive baselines, including DPO. Additionally, our in-depth quantitative analysis reveals the reasons behind our method's superior performance over DPO and showcases its versatility to other DPO variants.
+直接偏好优化（DPO）是一种广泛采用的离线偏好优化算法，旨在使用成对偏好数据将大型语言模型（ LLMs ）与人类期望的行为结合起来。然而，成对数据中的获胜响应和失败响应是单独生成的，导致它们之间的相关性较弱以及对齐性能不佳。为了解决这个问题，我们提出了一种有效的成对数据桥接和建模相关性框架，名为 BMC。首先，我们通过有针对性的修改来提高成对偏好信号的一致性和信息量，以获胜响应为参考，通过改进失败响应来合成伪获胜响应。其次，我们发现仅 DPO 不足以对这些相关性进行建模并捕获细微的变化。因此，我们建议通过在训练期间动态利用策略模型的置信度来学习令牌级相关性。关于 QA、数学和指令遵循任务的综合实验证明了我们方法的有效性，显着超越了包括 DPO 在内的竞争基准。此外，我们深入的定量分析揭示了我们的方法优于 DPO 的原因，并展示了其与其他 DPO 变体的多功能性。
+
+## 28. *RainbowPO: A Unified Framework for Combining Improvements in Preference Optimization
+RainbowPO：结合偏好优化改进的统一框架
+### 关键字
+* Alignment
+* Preference Optimization
+* RLHF
+### 主要内容
+#### DPO类算法的问题
+* 虽然这些方法成功地将模型与人类偏好结合起来，但对其附加组件的贡献缺乏了解。
+* 公平和一致的比较很少，因此很难辨别哪些组件真正提高了下游性能。
+#### RainbowPO: Unified Framework
+* 这是一个统一的框架，通过将现有 DPO 方法的关键组件分类为七个主要方向，揭开了现有 DPO 方法的有效性
+* 将这些组件集成到一个单一的有凝聚力的目标中，从而提高每个单独元素的性能。
+
+### 相关链接
+* <a href="./papers/5650_RainbowPO_A_Unified_Frame.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=trKee5pIFv">ICLR链接</a>
+
+### 摘要
+Recently, numerous preference optimization algorithms have been introduced as extensions to the Direct Preference Optimization (DPO) family. While these methods have successfully aligned models with human preferences, there is a lack of understanding regarding the contributions of their additional components. Moreover, fair and consistent comparisons are scarce, making it difficult to discern which components genuinely enhance downstream performance. In this work, we propose RainbowPO, a unified framework that demystifies the effectiveness of existing DPO methods by categorizing their key components into seven broad directions. We integrate these components into a single cohesive objective, enhancing the performance of each individual element. Through extensive experiments, we demonstrate that RainbowPO outperforms existing DPO variants. Additionally, we provide insights to guide researchers in developing new DPO methods and assist practitioners in their implementations.
+最近，许多偏好优化算法被引入作为直接偏好优化 (DPO) 系列的扩展。虽然这些方法成功地将模型与人类偏好结合起来，但对其附加组件的贡献缺乏了解。此外，公平和一致的比较很少，因此很难辨别哪些组件真正提高了下游性能。在这项工作中，我们提出了 RainbowPO，这是一个统一的框架，通过将现有 DPO 方法的关键组件分类为七个主要方向，揭开了现有 DPO 方法有效性的神秘面纱。我们将这些组件集成到一个单一的有凝聚力的目标中，从而提高每个单独元素的性能。通过大量的实验，我们证明 RainbowPO 的性能优于现有的 DPO 变体。此外，我们还提供见解来指导研究人员开发新的 DPO 方法并协助从业者实施。
+
+
+
+## 29. Direct Preference Optimization With Unobserved Preference Heterogeneity
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+
 ## 
 ### 关键字
 
@@ -579,8 +723,8 @@ Direct Preference Optimization (DPO), and its numerous variants, are increasingl
 
 
 ### 相关链接
-<a href="">查看PDF</a>
-<a href="">ICLR链接</a>
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
 
 ### 摘要
 
@@ -594,8 +738,8 @@ Direct Preference Optimization (DPO), and its numerous variants, are increasingl
 
 
 ### 相关链接
-<a href="">查看PDF</a>
-<a href="">ICLR链接</a>
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
 
 ### 摘要
 
@@ -609,8 +753,8 @@ Direct Preference Optimization (DPO), and its numerous variants, are increasingl
 
 
 ### 相关链接
-<a href="">查看PDF</a>
-<a href="">ICLR链接</a>
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
 
 ### 摘要
 
@@ -624,7 +768,216 @@ Direct Preference Optimization (DPO), and its numerous variants, are increasingl
 
 
 ### 相关链接
-<a href="">查看PDF</a>
-<a href="">ICLR链接</a>
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
+
+### 摘要
+
+
+
+## 
+### 关键字
+
+
+### 主要内容
+
+
+### 相关链接
+* <a href="">查看PDF</a>
+* <a href="">ICLR链接</a>
 
 ### 摘要
