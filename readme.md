@@ -722,7 +722,145 @@ RLHF 的出现是使语言模型与人类目标和价值观保持一致的关键
 
 
 
-## 30. Enhancing Multimodal LLM for Detailed and Accurate Video Captioning using Multi-Round Preference Optimization
+
+## 30. Improving Reasoning Ability of Large Language Models via Iterative Uncertainty-based Preference Optimization
+通过基于迭代不确定性的偏好优化提高大型语言模型的推理能力
+### 关键字
+* Preference Optimization
+* LLM
+* Iterative Optimization 
+* Uncertainty 
+
+### 主要内容
+#### DPO训练的问题
+* 缺少构造高质量的偏好数据集，需要昂贵的人工注释或强大的LM注释
+* DPO在复杂推理任务中表现出次优性能
+#### 此工作的解决方式
+1. 引入一种通过迭代采样和执行反馈来收集偏好对的方法，该方法适用于策略模型当前的学习状态(学习良好、错误学习和未学习)
+2. 提出IUPO(Interative Uncertainty-based Preference Optimization)
+    * 一种基于迭代不确定性的偏好优化方法，通过评估模型置信度来实现细粒度的偏好控制
+    * 为减轻DPO的失败并提高其在推理任务中的适用性
+### 相关链接
+* <a href="./papers/9446_Improving_Reasoning_Abili.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=bGGMLWAGMc">ICLR链接</a>
+
+### 摘要
+Direct Preference Optimization (DPO) has recently emerged as an efficient and effective method for aligning large language models with human preferences. However, constructing high-quality preference datasets remains challenging, often necessitating expensive manual or powerful LM annotations. Additionally, standard DPO exhibits suboptimal performance in complex reasoning tasks, such as mathematical and code reasoning. In this paper, we introduce an approach to collect preference pairs through iterative sampling and execution feedback, tailored to the current learning state (e.g. well-learned, mis-learned, and unlearned) of the policy model. To alleviate the failures of DPO and improve its applicability in reasoning tasks, we propose IUPO, an iterative uncertainty-based preference optimization method that achieves fine-grained preference control by assessing model confidence. We validate our approach across three reasoning tasks, incorporating five established reasoning datasets and one self-curated dataset. Our experimental results demonstrate an overall improvement of 3.6% over the standard DPO method. Furthermore, our approach exhibits promising generalizability involving weak-to-strong (8B to 70B) and cross-model (Llama to Mistral) generalizations.
+直接偏好优化（DPO）最近已成为一种使大型语言模型与人类偏好保持一致的高效方法。然而，构建高质量的偏好数据集仍然具有挑战性，通常需要昂贵的手动或强大的 LM 注释。此外，标准 DPO 在复杂推理任务（例如数学和代码推理）中表现出次优性能。在本文中，我们介绍了一种通过迭代采样和执行反馈来收集偏好对的方法，该方法适合策略模型当前的学习状态（例如，学习良好、错误学习和未学习）。为了减轻 DPO 的失败并提高其在推理任务中的适用性，我们提出了 IUPO，一种基于迭代不确定性的偏好优化方法，通过评估模型置信度来实现细粒度的偏好控制。我们在三个推理任务中验证了我们的方法，其中包含五个已建立的推理数据集和一个自行管理的数据集。我们的实验结果表明，与标准 DPO 方法相比，整体性能提高了 3.6%。此外，我们的方法表现出有希望的泛化性，涉及弱到强（8B 到 70B）和跨模型（Llama 到 Mistral）泛化。
+
+
+## 31. MallowsPO: Fine-Tune Your LLM with Preference Dispersions
+通过偏好分散微调LLM
+### 关键字
+* LLM Fine-Tuning
+* Learning from Human Feedback
+* Human Preference Dispersions(人类偏好离散度)
+    * 指的是在人类偏好评估中观察到的分歧或差异，尤其是在模型训练或偏好优化时。
+    * 这种偏好分散性在大模型微调中尤其关键，因为它反映了人类偏好的多样性。理解和建模这种差异可以帮助优化模型，使其输出更好地适应多样化的人类需求
+
+### 主要内容
+#### DPO的一个缺点
+缺乏描述人类偏好多样性的能力
+#### Mallows的由来：Mallows偏好排序理论
+
+### 相关链接
+* <a href="./papers/5314_MallowsPO_Fine_Tune_Your_.pdf">查看PDF</a>
+* <a href="https:分散性在大模型微调中尤其关键，因为它反映了人类偏好的多样性。理解和建模这种差异可以帮助优化模型，使其输出更好地适应多样化的人类需求
+
+### 主要内容
+#### DPO的一个缺点
+缺乏描述人类偏好多样性的能力
+#### Mallows的由来：Mallows偏好排序理论
+一种统计模型，用于描述和分析具有一定偏好顺序的群体排序数据。该理论通过马洛斯模型（Mallows Model）来解释人们对一组对象的排序偏好，并用来计算个体排序与“中心”或“理想”排序的接近程度。其核心参数控制偏好的一致性程度，值越小则群体内偏好越趋于一致。
+#### MallowsPO细节
+* 使用分散指数(dispersion index)反映人类对提示的偏好的分散性
+* 证明当前的DPO模型可以表示为该离散指数的特殊情况，从而与MallowsPO统一
+* 凭经验证明了如何使用这种分散指数来提高 DPO 在各种基准任务中的性能，从合成老虎机选择到可控生成和对话，同时保持强大的泛化能力。
+
+### 相关链接
+* <a href="./papers/5314_MallowsPO_Fine_Tune_Your_.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=d8cnezVcaW">ICLR链接</a>
+
+### 摘要
+Direct Preference Optimization (DPO) has recently emerged as a popular approach to improve reinforcement learning with human feedback (RLHF), leading to better techniques to fine-tune large language models (LLM). A weakness of DPO, however, lies in its lack of capability to characterize the diversity of human preferences. Inspired by Mallows' theory of preference ranking, we develop in this paper a new approach, the MallowsPO. A distinct feature of this approach is a dispersion index, which reflects the dispersion of human preference to prompts. We show that existing DPO models can be reduced to special cases of this dispersion index, thus unified with MallowsPO. More importantly, we demonstrate empirically how to use this dispersion index to enhance the performance of DPO in a broad array of benchmark tasks, from synthetic bandit selection to controllable generation and dialogues, while maintaining great generalization capabilities. MallowsPO is also compatible with other SOTA offline preference optimization methods, boosting nearly 2% extra LC win rate when used as a plugin for fine-tuning Llama3-Instruct.
+直接偏好优化（DPO）最近成为一种通过人类反馈（RLHF）改进强化学习的流行方法，从而产生更好的技术来微调大型语言模型（ LLM ）。然而，DPO 的弱点在于它缺乏描述人类偏好多样性的能力。受 Mallows 偏好排序理论的启发，我们在本文中开发了一种新方法，即 MallowsPO 。这种方法的一个显着特征是分散指数，它反映了人类对提示的偏好的分散性。我们证明现有的 DPO 模型可以简化为该离散指数的特殊情况，从而与 MallowsPO 统一。更重要的是，我们凭经验证明了如何使用这种分散指数来提高 DPO 在各种基准任务中的性能，从合成老虎机选择到可控生成和对话，同时保持强大的泛化能力。 MallowsPO 还兼容其他 SOTA 离线偏好优化方法，当用作微调 Llama3-Instruct 的插件时，可额外提高近 2% 的 LC 获胜率。
+
+
+## 32. Mitigating Forgetting in LLM Supervised Fine-Tuning and Preference Learning
+减少LLM监督微调和偏好学习中的遗忘
+### 关键字
+* Optimization Trade-off
+* LLMs
+* Supervised Fine-tuning (SFT)
+* RLHF
+
+### 主要内容
+预训练LLMs的后续训练由`SFT`和`Preference Learning`组成
+#### SFT-PO Trade-off
+* 就 SFT 和 RLHF/DPO 权衡而言，顺序训练并不是最优的： LLM在进行第二阶段的训练时逐渐忘记了第一阶段的训练。
+* 理论上证明了顺序后训练的`次优性`
+* 提出一种实用的联合后训练框架，该框架具有理论收敛保证，并且在经验上优于顺序后训练框架，同时具有相似的计算成本。
+
+### 相关链接
+* <a href="./papers/4034_Mitigating_Forgetting_in_.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=YeErX16hMC">ICLR链接</a>
+
+### 摘要
+Post-training of pre-trained LLMs, which typically consists of the supervised fine-tuning (SFT) stage and the preference learning (RLHF or DPO) stage, is crucial to effective and safe LLM applications. The widely adopted approach in post-training popular open-source LLMs is to sequentially perform SFT and RLHF/DPO. However, sequential training is sub-optimal in terms of SFT and RLHF/DPO trade-off: the LLM gradually forgets about the first stage's training when undergoing the second stage's training. We theoretically prove the sub-optimality of sequential post-training. Furthermore, we propose a practical joint post-training framework that has theoretical convergence guarantees and empirically outperforms sequential post-training framework, while having similar computational cost.
+预训练的LLMs的后训练通常包括监督微调 (SFT) 阶段和偏好学习 (RLHF 或 DPO) 阶段，对于有效和安全的LLM申请至关重要。流行的开源LLMs培训后广泛采用的方法是依次执行 SFT 和 RLHF/DPO。然而，就 SFT 和 RLHF/DPO 权衡而言，顺序训练并不是最优的： LLM在进行第二阶段的训练时逐渐忘记了第一阶段的训练。我们从理论上证明了顺序后训练的次优性。此外，我们提出了一种实用的联合后训练框架，该框架具有理论收敛保证，并且在经验上优于顺序后训练框架，同时具有相似的计算成本。
+
+
+## 33. CHiP: Cross-modal Hierarchical Direct Preference Optimization for Multimodal LLMs
+多模式LLMs的跨模式分层DPO
+### 关键字
+* Multimodal Large Language Models
+* Preference Optimization
+* DPO
+* Hallucination(幻觉)
+
+### 主要内容
+#### 针对问题：幻觉
+作者对表征分布的分析表明，多模态 DPO 很难对齐图像和文本表征，并难以区分幻觉和非幻觉描述。
+#### 提出CHiP：跨模式分层DPO
+* 在 DPO 框架内引入了视觉偏好优化模块，使 MLLM 能够同时学习文本和视觉偏好
+* 提出了一个分层文本偏好优化模块，该模块允许模型捕获多个粒度级别的偏好，包括response, segment和token级别。
+
+### 相关链接
+* <a href="./papers/7411_CHiP_Cross_modal_Hierarch.pdf">查看PDF</a>
+* <a href="https://openreview.net/forum?id=7lpDn2MhM2">ICLR链接</a>
+
+### 摘要
+Multimodal Large Language Models (MLLMs) still struggle with hallucinations despite their impressive capabilities. Recent studies have attempted to mitigate this by applying Direct Preference Optimization (DPO) to multimodal scenarios using preference pairs from text-based responses. However, our analysis of representation distributions reveals that multimodal DPO struggles to align image and text representations and to distinguish between hallucinated and non-hallucinated descriptions. To address these challenges, In this work, we propose a Cross-modal Hierarchical Direct Preference Optimization (CHiP) to address these limitations. We introduce a visual preference optimization module within the DPO framework, enabling MLLMs to learn from both textual and visual preferences simultaneously. Furthermore, we propose a hierarchical textual preference optimization module that allows the model to capture preferences at multiple granular levels, including response, segment, and token levels. We evaluate CHiP through both quantitative and qualitative analyses, with results across multiple benchmarks demonstrating its effectiveness in reducing hallucinations. On the Object HalBench dataset, CHiP outperforms DPO in hallucination reduction, achieving improvements of 52.7% and 55.5% relative points based on the base model Muffin and LLaVA models, respectively. We make all our datasets and code publicly available.
+尽管多模态大语言模型（MLLM）具有令人印象深刻的能力，但仍然与幻觉作斗争。最近的研究试图通过使用基于文本的响应中的偏好对将直接偏好优化 (DPO) 应用于多模式场景来缓解这一问题。然而，我们对表征分布的分析表明，多模态 DPO 很难对齐图像和文本表征，并难以区分幻觉和非幻觉描述。为了应对这些挑战，在这项工作中，我们提出了跨模式分层直接偏好优化（CHiP）来解决这些限制。我们在 DPO 框架内引入了视觉偏好优化模块，使 MLLM 能够同时学习文本和视觉偏好。此外，我们提出了一个分层文本偏好优化模块，该模块允许模型捕获多个粒度级别的偏好，包括响应、分段和令牌级别。我们通过定量和定性分析来评估 CHiP，多个基准的结果证明了其在减少幻觉方面的有效性。在 Object HalBench 数据集上，CHiP 在减少幻觉方面优于 DPO，基于基础模型 Muffin 和 LLaVA 模型分别实现了 52.7% 和 55.5% 的相对点改进。我们公开所有数据集和代码。
+
+
+## 34. Direct Alignment of Language Models via Quality-Aware Self-Refinement
+通过质量意识自我完善直接调整语言模型
+### 关键字
+* RL
+* Language Model
+### 主要内容
+#### DPO存在的问题
+DPO 不考虑积极和消极反应的相对质量，并且可能导致次优的培训结果。
+#### 解决方案
+* 研究动态微调LLM中内在知识的使用，以获得相对质量并帮助细化损失函数。
+    * 具体来说，利用LLM的知识来设计一个细化函数来估计正面和负面响应的质量
+    * 表明构造的细化函数可以帮助在温和的假设下自细化损失函数。细化功能已集成到 DPO 及其变体身份策略优化 (IPO) 中。
+
+### 相关链接
+* <a href="./papers/4297_Direct_Alignment_of_Langu.pdfs">查看PDF</a>
+* <a href="https://openreview.net/forum?id=tcdbBbHHPo">ICLR链接</a>
+
+### 摘要
+Reinforcement Learning from Human Feedback (RLHF) has been commonly used to align the behaviors of Large Language Models (LLMs) with human preferences. Recently, a popular alternative is Direct Policy Optimization (DPO), which replaces an LLM-based reward model with the policy itself, thus obviating the need for extra memory and training time to learn the reward model. However, DPO does not consider the relative qualities of the positive and negative responses, and can lead to sub-optimal training outcomes.
+To alleviate this problem, we investigate the use of intrinsic knowledge within the on-the-fly fine-tuning LLM to obtain relative qualities and help to refine the loss function. Specifically, we leverage the knowledge of the LLM to design a refinement function to estimate the quality of both the positive and negative responses. We show that the constructed refinement function can help self-refine the loss function under mild assumptions. The refinement function is integrated into DPO and its variant Identity Policy Optimization (IPO).
+Experiments across various evaluators indicate that they can improve the performance of the fine-tuned models over DPO and IPO.
+基于人类反馈的强化学习 (RLHF) 通常用于使大型语言模型 ( LLMs ) 的行为与人类偏好保持一致。最近，一种流行的替代方案是直接策略优化（DPO），它用策略本身取代了基于LLM的奖励模型，从而无需额外的内存和训练时间来学习奖励模型。然而，DPO 不考虑积极和消极反应的相对质量，并且可能导致次优的培训结果。
+为了缓解这个问题，我们研究了动态微调LLM中内在知识的使用，以获得相对质量并帮助细化损失函数。具体来说，我们利用LLM的知识来设计一个细化函数来估计正面和负面响应的质量。我们表明，构造的细化函数可以帮助在温和的假设下自细化损失函数。细化功能已集成到 DPO 及其变体身份策略优化 (IPO) 中。
+不同评估者的实验表明，他们可以提高微调模型相对于 DPO 和 IPO 的性能。
+
+
+## 35. Enhancing Multimodal LLM for Detailed and Accurate Video Captioning using Multi-Round Preference Optimization
 使用`多轮偏好优化`增强多模态LLM以实现详细且准确的视频字幕
 ### 关键字
 * Multi-modal LLM 
@@ -741,79 +879,6 @@ RLHF 的出现是使语言模型与人类目标和价值观保持一致的关键
 ### 摘要
 Videos contain a wealth of information, and generating detailed and accurate descriptions in natural language is a key aspect of video understanding. In this paper, we present video-SALMONN 2, an advanced audio-visual large language model (LLM) with low-rank adaptation (LoRA) designed for enhanced video (with paired audio) captioning through directed preference optimization (DPO). We propose new metrics to evaluate the completeness and accuracy of video descriptions, which are optimized using DPO. To further improve training, we introduce a novel multi-round DPO (mrDPO) approach, which involves periodically updating the DPO reference model, merging and re-initializing the LoRA module as a proxy for parameter updates after each training round (1,000 steps), and incorporating guidance from ground-truth video captions to stabilize the process. To address potential catastrophic forgetting of non-captioning abilities due to mrDPO, we propose rebirth tuning, which finetunes the pre-DPO LLM by using the captions generated by the mrDPO-trained model as supervised labels. Experiments show that mrDPO significantly enhances video-SALMONN 2's captioning accuracy, reducing global and local error rates by 40% and 20%, respectively, while decreasing the repetition rate by 35%. The final video-SALMONN 2 model, with just 7 billion parameters, surpasses leading models such as GPT-4o and Gemini-1.5-Pro in video captioning tasks, while maintaining competitive performance to the state-of-the-art on widely used video question-answering benchmark among models of similar size. Upon acceptance, we will release the code, model checkpoints, and training and test data. Demos are available at https://video-salmonn-2.github.io.
 视频包含丰富的信息，用自然语言生成详细而准确的描述是视频理解的一个关键方面。在本文中，我们提出了 video-SALMONN 2，这是一种具有低秩自适应 (LoRA) 的高级视听大语言模型 ( LLM )，旨在通过定向偏好优化 (DPO) 增强视频（带有配对音频）字幕。我们提出了新的指标来评估视频描述的完整性和准确性，并使用 DPO 进行了优化。为了进一步改进训练，我们引入了一种新颖的多轮 DPO (mrDPO) 方法，该方法涉及定期更新 DPO 参考模型、合并并重新初始化 LoRA 模块作为每轮训练（1,000 步）后参数更新的代理，并结合真实视频字幕的指导来稳定该过程。为了解决由于 mrDPO 导致的非字幕能力的潜在灾难性遗忘，我们提出了重生调整，即通过使用 mrDPO 训练模型生成的字幕作为监督标签来微调预 DPO LLM 。实验表明，mrDPO 显着提高了 video-SALMONN 2 的字幕准确性，将全局和局部错误率分别降低了 40% 和 20%，同时将重复率降低了 35%。最终的视频 SALMONN 2 模型仅具有 70 亿个参数，在视频字幕任务中超越了 GPT-4o 和 Gemini-1.5-Pro 等领先模型，同时在广泛使用的视频上保持了与最先进的竞争性能类似尺寸模型中的问答基准。接受后，我们将发布代码、模型检查点以及训练和测试数据。演示可在https://video-salmonn-2.github.io获取。
-
-
-## 
-### 关键字
-
-
-### 主要内容
-
-
-### 相关链接
-* <a href="">查看PDF</a>
-* <a href="">ICLR链接</a>
-
-### 摘要
-
-
-
-## 
-### 关键字
-
-
-### 主要内容
-
-
-### 相关链接
-* <a href="">查看PDF</a>
-* <a href="">ICLR链接</a>
-
-### 摘要
-
-
-
-## 
-### 关键字
-
-
-### 主要内容
-
-
-### 相关链接
-* <a href="">查看PDF</a>
-* <a href="">ICLR链接</a>
-
-### 摘要
-
-## 
-### 关键字
-
-
-### 主要内容
-
-
-### 相关链接
-* <a href="">查看PDF</a>
-* <a href="">ICLR链接</a>
-
-### 摘要
-
-
-
-
-## 
-### 关键字
-
-
-### 主要内容
-
-
-### 相关链接
-* <a href="">查看PDF</a>
-* <a href="">ICLR链接</a>
-
-### 摘要
 
 
 
